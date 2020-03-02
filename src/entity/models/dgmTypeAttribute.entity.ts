@@ -16,11 +16,11 @@ export class DgmTypeAttribute {
     @Column()
     valueInt: number;
 
-    @ManyToOne(type => InvType, invType => invType.dgmTypeAttributes)
+    @ManyToOne(() => InvType, invType => invType.dgmTypeAttributes)
     @JoinColumn({name: 'typeID', referencedColumnName: 'typeID'})
     invType: InvType;
 
-    @OneToOne(type => DgmAttributeType, {
+    @OneToOne(() => DgmAttributeType, {
         eager: true
     })
     @JoinColumn({ name: 'attributeID', referencedColumnName: 'attributeID' })

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, OneToMany, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
 import { DgmTypeAttribute } from './dgmTypeAttribute.entity';
 
 @Entity('invTypes')
@@ -10,7 +10,7 @@ export class InvType {
   typeName: string;
 
   @OneToMany(
-    type => DgmTypeAttribute,
+    () => DgmTypeAttribute,
     dgmType => dgmType.invType,
     {
       eager: true,

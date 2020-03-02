@@ -13,17 +13,17 @@ export class EntityService {
     private readonly systemRepository: Repository<SolarSystem>,
   ) {}
 
-  findOne = (id: number): Observable<System[]> =>
-    from(this.systemRepository.find({ solarSystemID: id })).pipe(
-      map(val => val.map(this.cleanUp)),
+  findSystemById = (id: number): Observable<System> =>
+    from(this.systemRepository.findOne({ solarSystemID: id })).pipe(
+      map(this.systemModel),
     );
 
   findSystemByName = (name: string): Observable<System> =>
     from(this.systemRepository.findOne({ solarSystemName: name })).pipe(
-      map(this.cleanUp),
+      map(this.systemModel),
     );
 
-  cleanUp = (data: SolarSystem): System =>
+  systemModel = (data: SolarSystem): System =>
     ({
       regionID: data.regionID,
       constellationID: data.constellationID,

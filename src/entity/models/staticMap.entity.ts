@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
+import { Entity, PrimaryColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 import { SolarSystem } from './SolarSystems.entity';
 import { InvType } from './invType.entity';
 
@@ -10,11 +10,11 @@ export class StaticMap {
     @PrimaryColumn()
     typeID: number;
 
-    @ManyToOne(type => SolarSystem, system => system.statics)
+    @ManyToOne(() => SolarSystem, system => system.statics)
     @JoinColumn({name: 'constellationID', referencedColumnName: 'constellationID'})
     system: SolarSystem;
 
-    @OneToOne(type => InvType, {
+    @OneToOne(() => InvType, {
         eager: true,
     })
     @JoinColumn({ name: 'typeID', referencedColumnName: 'typeID' })

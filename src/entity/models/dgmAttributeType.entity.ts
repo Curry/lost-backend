@@ -1,5 +1,4 @@
-import { Entity, Column, PrimaryColumn, JoinColumn, ManyToOne } from 'typeorm';
-import { DgmTypeAttribute } from './dgmTypeAttribute.entity';
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('dgmAttributeTypes')
 export class DgmAttributeType {

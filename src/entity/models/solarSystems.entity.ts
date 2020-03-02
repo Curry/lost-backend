@@ -26,14 +26,14 @@ export class SolarSystem {
   @Column()
   security: number;
 
-  @OneToOne(type => WormholeClasses, {
+  @OneToOne(() => WormholeClasses, {
     eager: true,
   })
   @JoinColumn({ name: 'regionID' })
   class: WormholeClasses;
 
   @OneToMany(
-    type => StaticMap,
+    () => StaticMap,
     statics => statics.system,
     {
       eager: true,

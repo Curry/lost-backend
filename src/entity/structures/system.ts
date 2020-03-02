@@ -10,9 +10,11 @@ export enum Class {
   HIGH,
   LOW,
   NULL,
-  THERA,
+  THERA = 12,
   SHATTERED,
 }
+
+export type Effect = "Magnetar" | "Black Hole" | "Red Giant" | "Pulsar" | "Wolf-Rayet" | "Cataclysmic Variable";
 
 export class Static {
   typeID: number;
