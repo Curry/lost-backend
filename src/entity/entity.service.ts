@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { SolarSystem } from './models/SolarSystems.entity';
+import { SolarSystem } from './models/solarSystems.entity';
 import { System, Static } from './structures/system';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

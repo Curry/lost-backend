@@ -1,5 +1,5 @@
 import { Entity, PrimaryColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
-import { SolarSystem } from './SolarSystems.entity';
+import { SolarSystem } from './solarSystems.entity';
 import { InvType } from './invType.entity';
 
 @Entity('staticMap')
