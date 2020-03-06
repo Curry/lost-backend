@@ -1,4 +1,4 @@
-import { StaticMap } from '../models/staticMap.entity';
+import { MapStatic } from '../static/mapStatic.entity';
 
 export enum Class {
   C1 = 1,
@@ -14,7 +14,13 @@ export enum Class {
   SHATTERED,
 }
 
-export type Effect = "Magnetar" | "Black Hole" | "Red Giant" | "Pulsar" | "Wolf-Rayet" | "Cataclysmic Variable";
+export type Effect =
+  | 'Magnetar'
+  | 'Black Hole'
+  | 'Red Giant'
+  | 'Pulsar'
+  | 'Wolf-Rayet'
+  | 'Cataclysmic Variable';
 
 export class Static {
   typeID: number;
@@ -25,7 +31,7 @@ export class Static {
   targetRegen: number;
   targetOneThrough: number;
 
-  constructor(staticMap: StaticMap) {
+  constructor(staticMap: MapStatic) {
     this.typeID = staticMap.typeID;
     this.typeName = staticMap.invType.typeName;
     const attributes = staticMap.invType.dgmTypeAttributes;

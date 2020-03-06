@@ -1,14 +1,14 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { EntityService } from './entity.service';
 import { System } from './structures/system';
 import { Observable } from 'rxjs';
+import { EntityService } from './entity.service';
 
-@Controller('system')
+@Controller('entity')
 export class EntityController {
   constructor(private readonly service: EntityService) {}
 
-  @Get(':name')
+  @Get('/system/:name')
   findOne(@Param('name') name: string): Observable<System> {
-    return this.service.findSystemByName(name)
+    return this.service.findSystemByName(name);
   }
 }

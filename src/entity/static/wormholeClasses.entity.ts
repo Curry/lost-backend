@@ -2,9 +2,9 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('mapLocationWormholeClasses')
 export class WormholeClasses {
-    @PrimaryColumn()
-    locationID: number;
+  @PrimaryColumn()
+  locationID: number;
 
-    @Column()
-    wormholeClassID: number;
+  @Column()
+  wormholeClassID: number;
 }

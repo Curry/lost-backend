@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { SolarSystem } from './models/solarSystems.entity';
+import { SolarSystem } from './static/solarSystems.entity';
 import { System, Static } from './structures/system';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -22,7 +22,7 @@ export class EntityService {
     from(this.systemRepository.findOne({ solarSystemName: name })).pipe(
       map(this.systemModel),
     );
-
+    
   systemModel = (data: SolarSystem): System =>
     ({
       regionID: data.regionID,

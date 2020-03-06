@@ -1,17 +1,25 @@
-
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { WormholeClasses } from './models/wormholeClasses.entity';
+import { WormholeClasses } from './static/wormholeClasses.entity';
 import { EntityService } from './entity.service';
 import { EntityController } from './entity.controller';
-import { SolarSystem } from './models/solarSystems.entity';
-import { StaticMap } from './models/staticMap.entity';
-import { InvType } from './models/invType.entity';
-import { DgmTypeAttribute } from './models/dgmTypeAttribute.entity';
-import { DgmAttributeType } from './models/dgmAttributeType.entity';
+import { SolarSystem } from './static/solarSystems.entity';
+import { InvType } from './static/invType.entity';
+import { DgmTypeAttribute } from './static/dgmTypeAttribute.entity';
+import { DgmAttributeType } from './static/dgmAttributeType.entity';
+import { MapStatic } from './static/mapStatic.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([WormholeClasses, SolarSystem, StaticMap, InvType, DgmTypeAttribute, DgmAttributeType])],
+  imports: [
+    TypeOrmModule.forFeature([
+      WormholeClasses,
+      SolarSystem,  
+      InvType,
+      DgmTypeAttribute,
+      DgmAttributeType,
+      MapStatic,
+    ]),
+  ],
   providers: [EntityService],
   controllers: [EntityController],
 })

@@ -7,7 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { WormholeClasses } from './wormholeClasses.entity';
-import { StaticMap } from './staticMap.entity';
+import { MapStatic } from './mapStatic.entity';
 
 @Entity('mapSolarSystems')
 export class SolarSystem {
@@ -26,6 +26,42 @@ export class SolarSystem {
   @Column()
   security: number;
 
+  @Column()
+  luminosity: number;
+
+  @Column()
+  border: number;
+
+  @Column()
+  fringe: number;
+
+  @Column()
+  corridor: number;
+
+  @Column()
+  hub: number;
+
+  @Column()
+  international: number;
+
+  @Column()
+  regional: number;
+
+  @Column()
+  factionID: number;
+
+  @Column()
+  radius: number;
+
+  @Column()
+  sunTypeID: number;
+
+  @Column()
+  securityClass: string;
+
+  @Column()
+  constellation: number;
+
   @OneToOne(() => WormholeClasses, {
     eager: true,
   })
@@ -33,24 +69,11 @@ export class SolarSystem {
   class: WormholeClasses;
 
   @OneToMany(
-    () => StaticMap,
+    () => MapStatic,
     statics => statics.system,
     {
       eager: true,
     },
   )
-  statics: StaticMap[];
-
-  //   luminosity: number;
-  //   border: number;
-  //   fringe: number;
-  //   corridor: number;
-  //   hub: number;
-  //   international: number;
-  //   regional: number;
-  //   factionID: number;
-  //   radius: number;
-  //   sunTypeID: number;
-  //   securityClass: string;
-  //   constellation: number;
+  statics: MapStatic[];
 }
