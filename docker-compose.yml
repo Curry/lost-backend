@@ -1,0 +1,19 @@
+version: '2.0'
+
+services:
+    db:
+        image: mysql:5.7
+        volumes:
+            - database:/var/lib/mysql
+        restart: always
+        environment:
+          MYSQL_ROOT_PASSWORD: password
+
+    pathfinder:
+        image: kryptedgaming/pathfinder:latest
+        env_file: .env
+        ports:
+            - "8000:80"
+
+volumes:
+    database: {}

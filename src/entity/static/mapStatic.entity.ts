@@ -1,10 +1,10 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 import { SolarSystem } from './solarSystems.entity';
 import { InvType } from './invType.entity';
 
 @Entity('mapStatics')
 export class MapStatic {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
