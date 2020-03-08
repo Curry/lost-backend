@@ -1,36 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { SolarSystem } from './static/solarSystems.entity';
-import { System, Static } from './structures/system';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { System } from './data/system.db';
+import { SystemModel } from './structures/system';
+import { Corporation } from './data/corporation.db';
+import { Star } from './data/star.db';
 
 @Injectable()
 export class EntityService {
   constructor(
-    @InjectRepository(SolarSystem)
-    private readonly systemRepository: Repository<SolarSystem>,
+    @InjectRepository(System)
+    private readonly systemRepo: Repository<System>,
+    @InjectRepository(Corporation)
+    private readonly corpRepo: Repository<Corporation>,
+    @InjectRepository(Star)
+    private readonly star: Repository<Star>,
   ) {}
 
-  findSystemById = (id: number): Observable<System> =>
-    from(this.systemRepository.findOne({ solarSystemID: id })).pipe(
-      map(this.systemModel),
-    );
+  findSystemByName = (name: string): Observable<SystemModel> =>
+    from(this.systemRepo.findOne({ systemName: name })).pipe(
+      map(val => new SystemModel(val))
+    )
 
-  findSystemByName = (name: string): Observable<System> =>
-    from(this.systemRepository.findOne({ solarSystemName: name })).pipe(
-      map(this.systemModel),
-    );
-    
-  systemModel = (data: SolarSystem): System =>
-    ({
-      regionID: data.regionID,
-      constellationID: data.constellationID,
-      solarSystemID: data.solarSystemID,
-      solarSystemName: data.solarSystemName,
-      security: data.security,
-      class: data.class.wormholeClassID,
-      statics: data.statics.map(staticInfo => new Static(staticInfo)),
-    } as System);
+  findCorpById = (id: number): Observable<Corporation> =>
+    from(this.corpRepo.findOne(id))
+
+  findTest = () => from(this.star.findOne(40000001))
 }

@@ -1,23 +1,37 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { WormholeClasses } from './static/wormholeClasses.entity';
 import { EntityService } from './entity.service';
 import { EntityController } from './entity.controller';
-import { SolarSystem } from './static/solarSystems.entity';
-import { InvType } from './static/invType.entity';
-import { DgmTypeAttribute } from './static/dgmTypeAttribute.entity';
-import { DgmAttributeType } from './static/dgmAttributeType.entity';
-import { MapStatic } from './static/mapStatic.entity';
+import { Alliance } from './data/alliance.db';
+import { Faction } from './data/faction.db';
+import { Category } from './data/category.db';
+import { Group } from './data/group.db';
+import { Type } from './data/type.db';
+import { Constellation } from './data/constellation.db';
+import { Corporation } from './data/corporation.db';
+import { Region } from './data/region.db';
+import { System } from './data/system.db';
+import { TypeAttribute } from './data/typeAttribute.db';
+import { SystemStatic } from './data/systemStatic.db';
+import { AttributeType } from './data/attributeType.db';
+import { Star } from './data/star.db';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      WormholeClasses,
-      SolarSystem,  
-      InvType,
-      DgmTypeAttribute,
-      DgmAttributeType,
-      MapStatic,
+      System,
+      SystemStatic,
+      Type,
+      TypeAttribute,
+      AttributeType,
+      Constellation,
+      Region,
+      Alliance,
+      Corporation,
+      Faction,
+      Group,
+      Category,
+      Star
     ]),
   ],
   providers: [EntityService],

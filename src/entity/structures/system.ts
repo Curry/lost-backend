@@ -1,4 +1,5 @@
-import { MapStatic } from '../static/mapStatic.entity';
+import { System } from '../data/system.db';
+import { SystemStatic } from '../data/systemStatic.db';
 
 export enum Class {
   C1 = 1,
@@ -15,50 +16,68 @@ export enum Class {
 }
 
 export type Effect =
-  | 'Magnetar'
-  | 'Black Hole'
-  | 'Red Giant'
-  | 'Pulsar'
-  | 'Wolf-Rayet'
-  | 'Cataclysmic Variable';
+  | 'magnetar'
+  | 'cataclysmic'
+  | 'redGiant'
+  | 'pulsar'
+  | 'wolfRayet'
+  | 'blackHole';
 
 export class Static {
   typeID: number;
   typeName: string;
   targetClass: Class;
-  targetLifetime: number;
-  targetMass: number;
-  targetRegen: number;
-  targetOneThrough: number;
+  lifetime: number;
+  maxMass: number;
+  massRegen: number;
+  maxOnePass: number;
 
-  constructor(staticMap: MapStatic) {
-    this.typeID = staticMap.typeID;
-    this.typeName = staticMap.invType.typeName;
-    const attributes = staticMap.invType.dgmTypeAttributes;
+  constructor(systemStatic: SystemStatic) {
+    this.typeID = systemStatic.typeId;
+    this.typeName = systemStatic.type.typeName;
+    const attributes = systemStatic.type.typeAttributes;
     this.targetClass = attributes.find(
       val => val.attributeID === 1381,
     ).valueFloat;
-    this.targetLifetime = attributes.find(
+    this.lifetime = attributes.find(
       val => val.attributeID === 1382,
     ).valueFloat;
-    this.targetMass = attributes.find(
+    this.maxMass = attributes.find(
       val => val.attributeID === 1383,
     ).valueFloat;
-    this.targetRegen = attributes.find(
+    this.massRegen = attributes.find(
       val => val.attributeID === 1384,
     ).valueFloat;
-    this.targetOneThrough = attributes.find(
+    this.maxOnePass = attributes.find(
       val => val.attributeID === 1385,
     ).valueFloat;
   }
 }
 
-export class System {
+export class SystemModel {
   regionID: number;
   constellationID: number;
-  solarSystemID: number;
-  solarSystemName: string;
-  security: number;
-  class: number;
+  systemID: number;
+  systemName: string;
+  starId: number;
+  security: string;
+  trueSec: number
+  securityStatus: number;
+  securityClass: string;
+  effect: Effect;
   statics: Static[];
+
+  constructor(system: System) {
+    this.systemID = system.systemId;
+    this.constellationID = system.constellationId;
+    this.regionID = system.regionId;
+    this.systemName = system.systemName;
+    this.starId = system.starId;
+    this.security = system.security;
+    this.trueSec = system.trueSec;
+    this.securityStatus = system.securityStatus;
+    this.securityClass = system.securityClass;
+    this.effect = system.effect;
+    this.statics = system.statics.map(systemStatic => new Static(systemStatic));
+  }
 }

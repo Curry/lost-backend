@@ -1,9 +1,12 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-@Entity('dgmAttributeTypes')
-export class DgmAttributeType {
+@Entity('attributeType')
+export class AttributeType {
   @PrimaryColumn()
   attributeID: number;
+
+  @Column()
+  attributeName: string;
 
   @Column()
   description: string;

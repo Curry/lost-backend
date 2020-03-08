@@ -12,7 +12,7 @@ import { AppService } from './app.service';
       port: 3306,
       username: 'test',
       password: 'test',
-      database: 'eve',
+      database: 'eve_data',
       autoLoadEntities: true,
     }),
     EntityModule,
