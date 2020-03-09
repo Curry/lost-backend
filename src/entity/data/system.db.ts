@@ -1,8 +1,7 @@
 import { Entity, Column, OneToMany, PrimaryColumn, OneToOne, JoinColumn } from 'typeorm';
 import { SystemStatic } from './systemStatic.db';
-import { Effect } from '../structures/system';
-import { Constellation } from './constellation.db';
-import { Region } from './region.db';
+import { Effect } from '../models/system';
+import { Star } from './star.db';
 
 @Entity('system')
 export class System {
@@ -13,13 +12,13 @@ export class System {
   constellationId: number;
 
   @Column()
+  starId: number;
+
+  @Column()
   regionId: number;
 
   @Column()
   systemName: string;
-
-  @Column()
-  starId: number;
 
   @Column()
   security: string;
@@ -42,4 +41,8 @@ export class System {
     { eager: true },
   )
   statics: SystemStatic[];
+
+  @OneToOne(() => Star)
+  @JoinColumn({ name: 'starId' })
+  star: Promise<Star>
 }

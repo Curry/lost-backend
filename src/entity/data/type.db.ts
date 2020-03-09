@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany, OneToOne, JoinColumn } from 'typeorm';
 import { TypeAttribute } from './typeAttribute.db';
+import { Group } from './group.db';
 
 @Entity('type')
 export class Type {
@@ -19,5 +20,10 @@ export class Type {
       eager: true,
     },
   )
+  @JoinColumn({ name: 'typeID' })
   typeAttributes: TypeAttribute[];
+
+  @OneToOne(() => Group, { eager: true })
+  @JoinColumn({ name: 'groupId' })
+  group: Group;
 }

@@ -15,6 +15,8 @@ import { TypeAttribute } from './data/typeAttribute.db';
 import { SystemStatic } from './data/systemStatic.db';
 import { AttributeType } from './data/attributeType.db';
 import { Star } from './data/star.db';
+import { Station } from './data/station.db';
+import { Race } from './data/race.db';
 
 @Module({
   imports: [
@@ -31,7 +33,10 @@ import { Star } from './data/star.db';
       Faction,
       Group,
       Category,
-      Star
+      Star,
+      Race,
+      Station,
+      Category,
     ]),
   ],
   providers: [EntityService],

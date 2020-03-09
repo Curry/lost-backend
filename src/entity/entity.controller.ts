@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { EntityService } from './entity.service';
-import { SystemModel } from './structures/system';
+import { SystemModel } from './models/system';
 
 @Controller('entity')
 export class EntityController {

@@ -4,9 +4,9 @@ import { Repository } from 'typeorm';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { System } from './data/system.db';
-import { SystemModel } from './structures/system';
+import { SystemModel } from './models/system';
 import { Corporation } from './data/corporation.db';
-import { Star } from './data/star.db';
+import { Station } from './data/station.db';
 
 @Injectable()
 export class EntityService {
@@ -15,8 +15,8 @@ export class EntityService {
     private readonly systemRepo: Repository<System>,
     @InjectRepository(Corporation)
     private readonly corpRepo: Repository<Corporation>,
-    @InjectRepository(Star)
-    private readonly star: Repository<Star>,
+    @InjectRepository(Station)
+    private readonly test: Repository<Station>,
   ) {}
 
   findSystemByName = (name: string): Observable<SystemModel> =>
@@ -24,8 +24,8 @@ export class EntityService {
       map(val => new SystemModel(val))
     )
 
-  findCorpById = (id: number): Observable<Corporation> =>
+  findCorpById = (id: number) =>
     from(this.corpRepo.findOne(id))
 
-  findTest = () => from(this.star.findOne(40000001))
+  findTest = () => from(this.test.findOne(60000004));
 }

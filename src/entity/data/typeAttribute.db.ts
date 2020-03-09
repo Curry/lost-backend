@@ -20,12 +20,12 @@ export class TypeAttribute {
     () => Type,
     type => type.typeAttributes,
   )
-  @JoinColumn({ name: 'typeID', referencedColumnName: 'typeID' })
+  @JoinColumn({ name: 'typeID' })
   type: Type;
 
   @OneToOne(() => AttributeType, {
     eager: true,
   })
-  @JoinColumn({ name: 'attributeID', referencedColumnName: 'attributeID' })
+  @JoinColumn({ name: 'attributeID' })
   attributeType: AttributeType;
 }
