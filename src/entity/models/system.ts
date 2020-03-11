@@ -1,6 +1,5 @@
 import { System } from '../data/system.db';
 import { SystemStatic } from '../data/systemStatic.db';
-import { Star } from '../data/star.db';
 
 export enum Class {
   C1 = 1,

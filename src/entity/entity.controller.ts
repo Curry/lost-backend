@@ -17,8 +17,8 @@ export class EntityController {
     return this.service.findCorpById(id);
   }
 
-  @Get('/test')
-  findTest() {
-    return this.service.findTest();
+  @Get('/route/:src/:dest')
+  findTest(@Param('src') src: number, @Param('dest') dest: number) {
+    return this.service.findRoute(src, dest);
   }
 }

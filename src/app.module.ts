@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, HttpModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EntityModule } from './entity/entity.module';
 import { AppController } from './app.controller';
@@ -16,6 +16,7 @@ import { AppService } from './app.service';
       autoLoadEntities: true,
     }),
     EntityModule,
+    HttpModule,
   ],
   controllers: [AppController],
   providers: [AppService],

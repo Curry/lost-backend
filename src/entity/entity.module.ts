@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, HttpModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EntityService } from './entity.service';
 import { EntityController } from './entity.controller';
@@ -17,6 +17,7 @@ import { AttributeType } from './data/attributeType.db';
 import { Star } from './data/star.db';
 import { Station } from './data/station.db';
 import { Race } from './data/race.db';
+import { SystemNeighbor } from './data/systemNeighbor.db';
 
 @Module({
   imports: [
@@ -37,7 +38,9 @@ import { Race } from './data/race.db';
       Race,
       Station,
       Category,
+      SystemNeighbor,
     ]),
+    HttpModule,
   ],
   providers: [EntityService],
   controllers: [EntityController],
