@@ -2,15 +2,27 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('constellations')
 export class Constellation {
-  @PrimaryColumn()
+  @PrimaryColumn({
+    type: 'int',
+    width: 11
+  })
   constellationID: number;
 
-  @Column()
+  @Column({
+    type: 'int',
+    width: 11
+  })
   regionID: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 100
+  })
   constellationName: string;
 
-  @Column()
+  @Column({
+    type: 'int',
+    width: 11
+  })
   factionID: number;
 }

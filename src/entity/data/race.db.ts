@@ -3,14 +3,26 @@ import { Faction } from './faction.db';
 
 @Entity('race')
 export class Race {
-  @PrimaryColumn()
+  @PrimaryColumn({
+    type: 'int',
+    width: 11
+  })
   raceId: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 128
+  })
   raceName: string;
 
-  @Column()
+  @Column('text')
   description: string;
+
+  @Column({
+    type: 'int',
+    width: 11
+  })
+  factionId: number;
 
   @OneToOne(() => Faction)
   @JoinColumn({ name: 'factionId' })

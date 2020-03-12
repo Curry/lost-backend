@@ -17,8 +17,33 @@ export class EntityController {
     return this.service.findCorpById(id);
   }
 
+  @Get('/alliance/:id')
+  findAlliance(@Param('id') id: number) {
+    return this.service.findAllianceById(id);
+  }
+
   @Get('/route/:src/:dest')
-  findTest(@Param('src') src: number, @Param('dest') dest: number) {
+  findRoute(@Param('src') src: number, @Param('dest') dest: number) {
     return this.service.findRoute(src, dest);
+  }
+
+  @Get('/test')
+  findTest() {
+    // this.service.findAlliances().subscribe(val => {
+    //   console.log(val);
+    // })
+    // return '';
+    return this.service.findAlliances();
+    // return this.service.delete();
+  }
+
+  @Get('/test2')
+  findTest2() {
+    // this.service.findAlliances().subscribe(val => {
+    //   console.log(val);
+    // })
+    // return '';
+    // return this.service.findAlliances();
+    return this.service.delete();
   }
 }

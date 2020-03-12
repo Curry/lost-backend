@@ -1,28 +1,52 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Type } from './type.db';
 
 @Entity('star')
 export class Star {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn({
+    type: 'int',
+    width: 11
+  })
   starId: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 128
+  })
   starName: string;
 
-  @Column()
+  @Column({
+    type: 'bigint',
+    precision: 20
+  })
   age: number;
 
-  @Column()
+  @Column({
+    type: 'bigint',
+    precision: 20
+  })
   radius: number;
 
-  @Column()
+  @Column({
+    type: 'int',
+    width: 11
+  })
   temperature: number;
 
-  @Column()
+  @Column('float')
   luminosity: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 128
+  })
   spectralClass: string;
+
+  @Column({
+    type: 'int',
+    width: 11
+  })
+  typeId: number;
 
   @ManyToOne(() => Type, { eager: true })
   @JoinColumn({ name: 'typeId' })

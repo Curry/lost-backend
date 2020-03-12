@@ -2,12 +2,21 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('region')
 export class Region {
-  @PrimaryColumn()
+  @PrimaryColumn({
+    type: 'int',
+    width: 11
+  })
   regionID: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 100
+  })
   regionName: string;
 
-  @Column()
+  @Column({
+    type: 'int',
+    width: 11
+  })
   factionID: number;
 }

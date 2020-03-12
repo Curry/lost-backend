@@ -2,21 +2,39 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('faction')
 export class Faction {
-  @PrimaryColumn()
+  @PrimaryColumn({
+    type: 'int',
+    width: 11
+  })
   factionId: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 255
+  })
   factionName: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 255
+  })
   description: string;
 
-  @Column()
+  @Column({
+    type: 'int',
+    width: 11
+  })
   sizeFactor: number;
 
-  @Column()
+  @Column({
+    type: 'int',
+    width: 11
+  })
   stationCount: number;
 
-  @Column()
+  @Column({
+    type: 'int',
+    width: 11
+  })
   stationSystemCount: number;
 }

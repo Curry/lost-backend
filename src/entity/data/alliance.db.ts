@@ -1,21 +1,42 @@
-import { Entity, Column, PrimaryColumn, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Faction } from './faction.db';
+import { Corporation } from './corporation.db';
 
 @Entity('alliance')
 export class Alliance {
-  @PrimaryColumn()
+  @PrimaryColumn({
+    type: 'int',
+    width: 11
+  })
   allianceId: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 128
+  })
   allianceName: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 128
+  })
   ticker: string;
 
-  @Column()
+  @Column('datetime', { nullable: true })
   dateFounded: Date;
 
-  @OneToOne(() => Faction, { eager: true })
-  @JoinColumn({ name: 'factionId' })
-  faction: Faction;
+  @Column({
+    type: 'int',
+    width: 11,
+    nullable: true
+  })
+  factionId: number;
+
+  @OneToMany(() => Corporation, corporation => corporation.alliance, { eager: true })
+  @JoinColumn({ name: 'allianceId' })
+  corporations: Corporation[];
+
+  // @OneToOne(() => Faction, { eager: true })
+  // @JoinColumn({ name: 'factionId' })
+  // faction: Faction;
 }
