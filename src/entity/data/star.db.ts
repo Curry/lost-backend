@@ -17,38 +17,43 @@ export class Star {
 
   @Column({
     type: 'bigint',
-    precision: 20
+    precision: 20,
+    nullable: true,
   })
   age: number;
 
   @Column({
     type: 'bigint',
-    precision: 20
+    precision: 20,
+    nullable: true,
   })
   radius: number;
 
   @Column({
     type: 'int',
-    width: 11
+    width: 11,
+    nullable: true,
   })
   temperature: number;
 
-  @Column('float')
+  @Column('float', { nullable: true })
   luminosity: number;
 
   @Column({
     type: 'varchar',
-    length: 128
+    length: 128,
+    nullable: true,
   })
   spectralClass: string;
 
   @Column({
     type: 'int',
-    width: 11
+    width: 11,
+    nullable: true,
   })
   typeId: number;
 
-  @ManyToOne(() => Type, { eager: true })
+  @ManyToOne(() => Type, { eager: true, onDelete: 'SET NULL', onUpdate: 'RESTRICT' })
   @JoinColumn({ name: 'typeId' })
   type: Type;
 

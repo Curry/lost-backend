@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, JoinColumn, ManyToOne } from 'typeorm';
 import { Category } from './category.db';
 
 @Entity('group')
@@ -23,11 +23,12 @@ export class Group {
 
   @Column({
     type: 'int',
-    width: 11
+    width: 11,
+    nullable: true,
   })
   categoryId: number;
 
-  @OneToOne(() => Category, { eager: true })
+  @ManyToOne(() => Category, { eager: true, onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
   @JoinColumn({ name: 'categoryId' })
   category: Category;
 }

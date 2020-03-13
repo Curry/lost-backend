@@ -29,21 +29,6 @@ export class EntityController {
 
   @Get('/test')
   findTest() {
-    // this.service.findAlliances().subscribe(val => {
-    //   console.log(val);
-    // })
-    // return '';
     return this.service.findAlliances();
-    // return this.service.delete();
-  }
-
-  @Get('/test2')
-  findTest2() {
-    // this.service.findAlliances().subscribe(val => {
-    //   console.log(val);
-    // })
-    // return '';
-    // return this.service.findAlliances();
-    return this.service.delete();
   }
 }

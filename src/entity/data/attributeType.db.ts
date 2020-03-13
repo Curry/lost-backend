@@ -10,13 +10,15 @@ export class AttributeType {
 
   @Column({
     type: 'varchar',
-    length: 100
+    length: 100,
+    nullable: true,
   })
   attributeName: string;
 
   @Column({
     type: 'varchar',
-    length: 1000
+    length: 1000,
+    nullable: true,
   })
   description: string;
 }

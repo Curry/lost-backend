@@ -3,7 +3,6 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
-  OneToOne,
   JoinColumn,
 } from 'typeorm';
 import { System } from './system.db';
@@ -14,15 +13,27 @@ export class SystemStatic {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    type: 'int',
+    width: 11,
+    nullable: true,
+  })
   systemId: number;
 
-  @Column()
+  @Column({
+    type: 'int',
+    width: 11,
+    nullable: true,
+  })
   typeId: number;
 
   @ManyToOne(
     () => System,
     system => system.statics,
+    {
+      onDelete: 'CASCADE',
+      onUpdate: 'RESTRICT',
+    },
   )
   @JoinColumn({
     name: 'systemId',
@@ -30,7 +41,11 @@ export class SystemStatic {
   })
   system: System;
 
-  @OneToOne(() => Type, { eager: true })
+  @ManyToOne(() => Type, {
+    eager: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'RESTRICT',
+  })
   @JoinColumn({ name: 'typeId', referencedColumnName: 'typeID' })
   type: Type;
 }

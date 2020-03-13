@@ -15,16 +15,17 @@ export class Race {
   })
   raceName: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   description: string;
 
   @Column({
     type: 'int',
-    width: 11
+    width: 11,
+    nullable: true,
   })
   factionId: number;
 
-  @OneToOne(() => Faction)
+  @OneToOne(() => Faction, { onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
   @JoinColumn({ name: 'factionId' })
   faction: Promise<Faction>;
 }

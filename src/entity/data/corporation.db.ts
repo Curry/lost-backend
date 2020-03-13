@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, OneToOne, JoinColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryColumn, JoinColumn, ManyToOne } from 'typeorm';
 import { Alliance } from './alliance.db';
 import { Faction } from './faction.db';
 
@@ -51,11 +51,11 @@ export class Corporation {
   })
   isNPC: number;
 
-  @ManyToOne(() => Alliance, { onDelete: 'SET NULL' })
+  @ManyToOne(() => Alliance, { onDelete: 'SET NULL', onUpdate: 'RESTRICT' })
   @JoinColumn({ name: 'allianceId' })
   alliance: Alliance;
 
-  // @OneToOne(() => Faction, { eager: true })
-  // @JoinColumn({ name: 'factionId' })
-  // faction: Faction;
+  @ManyToOne(() => Faction, { onDelete: 'SET NULL', onUpdate: 'RESTRICT' })
+  @JoinColumn({ name: 'factionId' })
+  faction: Faction;
 }

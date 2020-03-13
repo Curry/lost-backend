@@ -10,14 +10,11 @@ export class Faction {
 
   @Column({
     type: 'varchar',
-    length: 255
+    length: 128
   })
   factionName: string;
 
-  @Column({
-    type: 'varchar',
-    length: 255
-  })
+  @Column('text', { nullable: true })
   description: string;
 
   @Column({

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, OneToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, JoinColumn, OneToMany, ManyToOne } from 'typeorm';
 import { Faction } from './faction.db';
 import { Corporation } from './corporation.db';
 
@@ -32,11 +32,11 @@ export class Alliance {
   })
   factionId: number;
 
-  @OneToMany(() => Corporation, corporation => corporation.alliance, { eager: true })
+  @OneToMany(() => Corporation, corporation => corporation.alliance, { cascade: true })
   @JoinColumn({ name: 'allianceId' })
   corporations: Corporation[];
 
-  // @OneToOne(() => Faction, { eager: true })
-  // @JoinColumn({ name: 'factionId' })
-  // faction: Faction;
+  @ManyToOne(() => Faction, { onDelete: 'SET NULL', onUpdate: 'RESTRICT' })
+  @JoinColumn({ name: 'factionId' })
+  faction: Faction;
 }

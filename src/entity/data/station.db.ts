@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, OneToOne, JoinColumn, AfterLoad } from 'typeorm';
+import { Entity, Column, PrimaryColumn, JoinColumn, AfterLoad, ManyToOne } from 'typeorm';
 import { System } from './system.db';
 import { Type } from './type.db';
 import { Corporation } from './corporation.db';
@@ -18,48 +18,52 @@ export class Station {
   })
   stationName: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   services: string;
 
   allServices: string[];
 
   @Column({
     type: 'int',
-    width: 11
+    width: 11,
+    nullable: true,
   })
   systemId: number;
 
-  @OneToOne(() => System)
+  @ManyToOne(() => System, { onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
   @JoinColumn({ name: 'systemId' })
   system: Promise<System>;
 
   @Column({
     type: 'int',
-    width: 11
+    width: 11,
+    nullable: true,
   })
   typeId: number;
 
-  @OneToOne(() => Type)
+  @ManyToOne(() => Type, { onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
   @JoinColumn({ name: 'typeId' })
   type: Type;
 
   @Column({
     type: 'int',
-    width: 11
+    width: 11,
+    nullable: true,
   })
   corporationId: number;
 
-  @OneToOne(() => Corporation)
+  @ManyToOne(() => Corporation, { onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
   @JoinColumn({ name: 'corporationId' })
   corporation: Promise<Corporation>;
 
   @Column({
     type: 'int',
-    width: 11
+    width: 11,
+    nullable: true,
   })
   raceId: number;
 
-  @OneToOne(() => Race)
+  @ManyToOne(() => Race, { onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
   @JoinColumn({ name: 'raceId'} )
   race: Promise<Race>;
 

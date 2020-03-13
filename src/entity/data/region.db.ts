@@ -10,13 +10,15 @@ export class Region {
 
   @Column({
     type: 'varchar',
-    length: 100
+    length: 100,
+    nullable: true,
   })
   regionName: string;
 
   @Column({
     type: 'int',
-    width: 11
+    width: 11,
+    nullable: true,
   })
   factionID: number;
 }

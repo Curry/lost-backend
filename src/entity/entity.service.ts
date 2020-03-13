@@ -1,16 +1,8 @@
 import { Injectable, HttpService, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { from, Observable, forkJoin, timer, zip } from 'rxjs';
-import {
-  map,
-  exhaustMap,
-  catchError,
-  mergeMap,
-  combineAll,
-  retry,
-  tap,
-} from 'rxjs/operators';
+import { from, Observable, timer, zip, of, iif } from 'rxjs';
+import { map, catchError, mergeMap, combineAll, retry } from 'rxjs/operators';
 import { System } from './data/system.db';
 import { SystemModel } from './models/system';
 import { Corporation } from './data/corporation.db';
@@ -59,72 +51,81 @@ export class EntityService {
         },
       })
       .pipe(
-        exhaustMap(val =>
-          forkJoin(
-            val.data.map(systemId => from(this.systemRepo.findOne(systemId))),
+        mergeMap(val =>
+          from(val.data).pipe(
+            map(systemId => from(this.systemRepo.findOne(systemId))),
+            combineAll(),
           ),
         ),
       );
 
   findAlliances = () =>
     this.http.get<number[]>(`${this.esiUrl}/alliances`).pipe(
-      map(val => val.data),
-      mergeMap(val =>
-        zip(from(val.sort().slice(0, 1)), timer(0, 100), x => x).pipe(
-          mergeMap(this.findAllianceInfo),
-          mergeMap(val =>
-            this.findCorps(val.alliance_id).pipe(
-              map(corps => {
-                val.corpIds = corps.data;
-                return val;
-              }),
-            ),
-          ),
-          map(val =>
-            from(val.corpIds).pipe(
-              map(this.findCorpInfo),
-              combineAll(),
-              map(corpInfo => {
-                val.corporations = corpInfo;
-                return val;
-              }),
-            ),
-          ),
-          combineAll(),
-        ),
-      ),
-      map(val => val.map(this.convertESItoModel)),
-      tap(this.saveAlliances),
-      // map(val => val.map(va => va.allianceId)),
+      map(val => val.data.sort()),
+      mergeMap(this.deleteOldAlliances),
+      mergeMap(this.findAllInfo),
+      mergeMap(this.rawESItoAlliance),
+      mergeMap(this.saveAlliances),
     );
 
-  getUniqueAlliances = (id: number[]) => from(this.allianceRepo.find()).pipe(
-    // map(val => )
-  )
+  deleteOldAlliances = (id: number[]) =>
+    from(this.allianceRepo.find()).pipe(
+      map(val => val.map(alliance => alliance.allianceId)),
+      map(val => ({
+        toDelete: val.filter(dbAlliance => !id.includes(dbAlliance)),
+        toCreate: id.filter(idAlliance => !val.includes(idAlliance)),
+      })),
+      mergeMap(val =>
+        iif(
+          () => val.toDelete.length !== 0,
+          of(val.toDelete).pipe(
+            mergeMap(alliance => from(this.allianceRepo.delete(alliance))),
+            map(() => val.toCreate),
+          ),
+          of(val.toCreate),
+        ),
+      ),
+    );
 
-  delete = () => from(this.allianceRepo.delete(1001642281))
+  saveAlliances = (alliance: Alliance[]) =>
+    from(alliance).pipe(
+      map(val => this.allianceRepo.save(val)),
+      combineAll(),
+      map(val => val.map(alliance => alliance.allianceId)),
+    );
 
-  saveAlliances = (alliance: Alliance[]) => {
-    alliance.forEach(val => {
-      this.allianceRepo.save(val);
-    });
-  };
+  findAllInfo = (alliances: number[]) =>
+    zip(from(alliances.slice(0, 2)), timer(0, 100), x => x).pipe(
+      mergeMap(this.getESIAllianceInfo),
+      mergeMap(this.getCorps),
+      map(this.getCorpInfo),
+      combineAll(),
+    );
 
-  findCorps = (allianceId: number) =>
+  getCorps = (alliance: ESIAlliance) =>
     this.http
-      .get<number[]>(`${this.esiUrl}/alliances/${allianceId}/corporations`)
-      .pipe(retry(10));
+      .get<number[]>(
+        `${this.esiUrl}/alliances/${alliance.alliance_id}/corporations`,
+      )
+      .pipe(
+        retry(10),
+        map(corps => {
+          alliance.corpIds = corps.data;
+          return alliance;
+        }),
+      );
 
-  findCorpInfo = (corpId: number) =>
-    this.http.get<ESICorporation>(`${this.esiUrl}/corporations/${corpId}`).pipe(
-      retry(10),
-      map(corp => {
-        corp.data['corporation_id'] = corpId;
-        return corp.data;
+  getCorpInfo = (alliance: ESIAlliance) =>
+    from(alliance.corpIds).pipe(
+      map(this.getESICorpInfo),
+      combineAll(),
+      map(corpInfo => {
+        alliance.corporations = corpInfo;
+        return alliance;
       }),
     );
 
-  findAllianceInfo = (allianceId: number) =>
+  getESIAllianceInfo = (allianceId: number) =>
     this.http.get<ESIAlliance>(`${this.esiUrl}/alliances/${allianceId}`).pipe(
       retry(10),
       map(alliance => {
@@ -133,24 +134,37 @@ export class EntityService {
       }),
     );
 
-  convertESItoModel = (alliance: ESIAlliance) => ({
-    allianceId: alliance.alliance_id,
-    allianceName: alliance.name,
-    factionId: alliance.faction_id,
-    ticker: alliance.ticker,
-    dateFounded: alliance.date_founded,
-    corporations: alliance.corporations.map(
-      corp =>
-        ({
-          corporationId: corp.corporation_id,
-          allianceId: corp.alliance_id,
-          corporationName: corp.name,
-          ticker: corp.ticker,
-          dateFounded: corp.date_founded,
-          isNPC: 0,
-          memberCount: corp.member_count,
-          factionId: corp.faction_id,
-        } as Corporation),
-    ),
-  } as Alliance)
+  getESICorpInfo = (corpId: number) =>
+    this.http.get<ESICorporation>(`${this.esiUrl}/corporations/${corpId}`).pipe(
+      retry(10),
+      map(corp => {
+        corp.data['corporation_id'] = corpId;
+        return corp.data;
+      }),
+    );
+
+  convertESItoModel = (alliance: ESIAlliance) =>
+    of({
+      allianceId: alliance.alliance_id,
+      allianceName: alliance.name,
+      factionId: alliance.faction_id,
+      ticker: alliance.ticker,
+      dateFounded: alliance.date_founded,
+      corporations: alliance.corporations.map(
+        corp =>
+          ({
+            corporationId: corp.corporation_id,
+            allianceId: corp.alliance_id,
+            corporationName: corp.name,
+            ticker: corp.ticker,
+            dateFounded: corp.date_founded,
+            isNPC: 0,
+            memberCount: corp.member_count,
+            factionId: corp.faction_id,
+          } as Corporation),
+      ),
+    } as Alliance);
+
+  rawESItoAlliance = (alliances: ESIAlliance[]) =>
+    from(alliances).pipe(map(this.convertESItoModel), combineAll());
 }

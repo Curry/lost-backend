@@ -1,17 +1,31 @@
-import { Entity, Column, PrimaryColumn, OneToMany, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { TypeAttribute } from './typeAttribute.db';
 import { Group } from './group.db';
 
 @Entity('type')
 export class Type {
-  @PrimaryColumn()
+  @PrimaryColumn({
+    type: 'int',
+    width: 11
+  })
   typeID: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 100,
+    nullable: true,
+  })
   typeName: string;
 
-  @Column()
+  @Column('text', { nullable: true })
   description: string;
+
+  @Column({
+    type: 'int',
+    width: 11,
+    nullable: true
+  })
+  groupId: number;
 
   @OneToMany(
     () => TypeAttribute,
@@ -23,7 +37,7 @@ export class Type {
   @JoinColumn({ name: 'typeID' })
   typeAttributes: TypeAttribute[];
 
-  @OneToOne(() => Group, { eager: true })
+  @ManyToOne(() => Group, { eager: true, onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
   @JoinColumn({ name: 'groupId' })
   group: Group;
 }
