@@ -32,7 +32,7 @@ export class Alliance {
   })
   factionId: number;
 
-  @OneToMany(() => Corporation, corporation => corporation.alliance, { cascade: true })
+  @OneToMany(() => Corporation, corporation => corporation.alliance, { cascade: true, eager: true })
   @JoinColumn({ name: 'allianceId' })
   corporations: Corporation[];
 

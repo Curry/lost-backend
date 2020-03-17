@@ -12,6 +12,10 @@ export class EntityController {
     return this.service.findSystemByName(name);
   }
 
+  @Get('/system/search/:name')
+  searchSystem(@Param('name') name: string): Observable<string[]> {
+    return this.service.findSystemsByName(name);
+  }
   @Get('/corp/:id')
   findId(@Param('id') id: number) {
     return this.service.findCorpById(id);
@@ -30,5 +34,10 @@ export class EntityController {
   @Get('/test')
   findTest() {
     return this.service.findAlliances();
+  }
+
+  @Get('/te')
+  ngInfo() {
+    return this.service.getInfo()
   }
 }

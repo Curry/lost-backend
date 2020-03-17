@@ -1,6 +1,6 @@
 import { Injectable, HttpService, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import { from, Observable, timer, zip, of, iif } from 'rxjs';
 import { map, catchError, mergeMap, combineAll, retry } from 'rxjs/operators';
 import { System } from './data/system.db';
@@ -22,6 +22,13 @@ export class EntityService {
   ) {}
 
   private esiUrl = 'https://esi.evetech.net/latest';
+
+  getInfo = () => from(this.allianceRepo.findOne(99004013))
+
+  findSystemsByName = (name: string): Observable<string[]> =>
+    from(this.systemRepo.find({ systemName: Like(`${name}%`) })).pipe(
+      map(val => val.map(sys => sys.systemName)),
+    )
 
   findSystemByName = (name: string): Observable<SystemModel> =>
     from(this.systemRepo.findOne({ systemName: name })).pipe(
@@ -62,13 +69,14 @@ export class EntityService {
   findAlliances = () =>
     this.http.get<number[]>(`${this.esiUrl}/alliances`).pipe(
       map(val => val.data.sort()),
-      mergeMap(this.deleteOldAlliances),
+      mergeMap(this.filterAlliances),
+      map(val => val.slice(0, 50)),
       mergeMap(this.findAllInfo),
       mergeMap(this.rawESItoAlliance),
-      mergeMap(this.saveAlliances),
+      // mergeMap(this.saveAlliances),
     );
 
-  deleteOldAlliances = (id: number[]) =>
+  filterAlliances = (id: number[]) =>
     from(this.allianceRepo.find()).pipe(
       map(val => val.map(alliance => alliance.allianceId)),
       map(val => ({
@@ -95,7 +103,7 @@ export class EntityService {
     );
 
   findAllInfo = (alliances: number[]) =>
-    zip(from(alliances.slice(0, 2)), timer(0, 100), x => x).pipe(
+    zip(from(alliances), timer(0, 100), x => x).pipe(
       mergeMap(this.getESIAllianceInfo),
       mergeMap(this.getCorps),
       map(this.getCorpInfo),

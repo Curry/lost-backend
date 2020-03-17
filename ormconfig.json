@@ -5,7 +5,7 @@
     "username": "test",
     "password": "test",
     "database": "eve_data",
-    "entities": ["src/entity/data/*.db.ts"],
+    "entities": ["src/**/*.db.ts"],
     "migrationsTableName": "migration",
     "migrations": ["migration/*.ts"],
     "cli": {
