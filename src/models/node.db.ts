@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { System } from 'src/entity/data/system.db';
 import { Map } from './map.db';
 
@@ -6,6 +14,9 @@ import { Map } from './map.db';
 export class Node {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column()
+  mapId: number;
 
   @CreateDateColumn()
   created: Date;
@@ -22,14 +33,27 @@ export class Node {
   @Column()
   connectionName: string;
 
-  @ManyToOne(() => System, { eager: true, onDelete: 'CASCADE', onUpdate: 'RESTRICT'})
+  @ManyToOne(() => System, {
+    eager: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'RESTRICT',
+  })
   @JoinColumn({ name: 'systemId' })
   system: System;
 
-  @ManyToOne(() => System, { eager: true, onDelete: 'CASCADE', onUpdate: 'RESTRICT'})
+  @ManyToOne(() => System, {
+    eager: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'RESTRICT',
+  })
   @JoinColumn({ name: 'linkedSystemId', referencedColumnName: 'systemId' })
   linkedSystem: System;
 
-  @ManyToOne(() => Map, map => map.nodes, { onDelete: 'CASCADE', onUpdate: 'RESTRICT'})
+  @ManyToOne(
+    () => Map,
+    map => map.nodes,
+    { onDelete: 'CASCADE', onUpdate: 'RESTRICT' },
+  )
+  @JoinColumn({ name: 'mapId' })
   map: Map;
 }
