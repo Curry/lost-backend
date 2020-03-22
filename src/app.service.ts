@@ -1,6 +1,10 @@
 import { Injectable, HttpService } from '@nestjs/common';
 import { stringify } from 'qs';
 import { map } from 'rxjs/operators';
+import { InjectRepository } from '@nestjs/typeorm';
+import { System } from './entity/data/system.db';
+import { Repository } from 'typeorm';
+import { from } from 'rxjs';
 
 @Injectable()
 export class AppService {

@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, OneToMany } from 'typeorm';
-import { Node } from './node.db';
+import { Connection } from './connection.db';
 
 @Entity('map')
 export class Map {
@@ -12,7 +12,10 @@ export class Map {
   @UpdateDateColumn()
   updated: Date;
 
-  @OneToMany(() => Node, node => node.map, { eager: true })
-  @JoinColumn({ name: 'mapId', referencedColumnName: 'mapId'})
-  nodes: Node;
+  @OneToMany(() => Connection, conn => conn.map, {
+    eager: true,
+    cascade: true,
+  })
+  @JoinColumn({ name: 'mapId' })
+  connections: Connection[];
 }

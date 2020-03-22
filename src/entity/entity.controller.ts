@@ -35,9 +35,4 @@ export class EntityController {
   findTest() {
     return this.service.findAlliances();
   }
-
-  @Get('/te')
-  ngInfo() {
-    return this.service.getInfo()
-  }
 }

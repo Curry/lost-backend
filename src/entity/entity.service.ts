@@ -23,12 +23,13 @@ export class EntityService {
 
   private esiUrl = 'https://esi.evetech.net/latest';
 
-  getInfo = () => from(this.allianceRepo.findOne(99004013))
-
-  findSystemsByName = (name: string): Observable<string[]> =>
-    from(this.systemRepo.find({ systemName: Like(`${name}%`) })).pipe(
-      map(val => val.map(sys => sys.systemName)),
-    )
+  findSystemById = (id: number): Observable<SystemModel> =>
+    from(this.systemRepo.findOne(id)).pipe(
+      map(val => new SystemModel(val)),
+      catchError(() => {
+        throw new NotFoundException();
+      }),
+    );
 
   findSystemByName = (name: string): Observable<SystemModel> =>
     from(this.systemRepo.findOne({ systemName: name })).pipe(
@@ -36,6 +37,11 @@ export class EntityService {
       catchError(() => {
         throw new NotFoundException();
       }),
+    );
+
+  findSystemsByName = (name: string): Observable<string[]> =>
+    from(this.systemRepo.find({ systemName: Like(`${name}%`) })).pipe(
+      map(val => val.map(sys => sys.systemName)),
     );
 
   findCorpById = (id: number) => from(this.corpRepo.findOne(id));
@@ -70,9 +76,8 @@ export class EntityService {
     this.http.get<number[]>(`${this.esiUrl}/alliances`).pipe(
       map(val => val.data.sort()),
       mergeMap(this.filterAlliances),
-      map(val => val.slice(0, 50)),
+      map(val => val.slice(0, 1)),
       mergeMap(this.findAllInfo),
-      mergeMap(this.rawESItoAlliance),
       // mergeMap(this.saveAlliances),
     );
 
@@ -97,7 +102,7 @@ export class EntityService {
 
   saveAlliances = (alliance: Alliance[]) =>
     from(alliance).pipe(
-      map(val => this.allianceRepo.save(val)),
+      map(val => from(this.allianceRepo.save(val))),
       combineAll(),
       map(val => val.map(alliance => alliance.allianceId)),
     );
@@ -106,7 +111,8 @@ export class EntityService {
     zip(from(alliances), timer(0, 100), x => x).pipe(
       mergeMap(this.getESIAllianceInfo),
       mergeMap(this.getCorps),
-      map(this.getCorpInfo),
+      mergeMap(this.getCorpInfo),
+      map(this.convertESItoModel),
       combineAll(),
     );
 
@@ -172,7 +178,4 @@ export class EntityService {
           } as Corporation),
       ),
     } as Alliance);
-
-  rawESItoAlliance = (alliances: ESIAlliance[]) =>
-    from(alliances).pipe(map(this.convertESItoModel), combineAll());
 }

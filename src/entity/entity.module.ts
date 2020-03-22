@@ -42,6 +42,7 @@ import { SystemNeighbor } from './data/systemNeighbor.db';
     ]),
     HttpModule,
   ],
+  exports: [EntityService],
   providers: [EntityService],
   controllers: [EntityController],
 })

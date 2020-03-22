@@ -26,7 +26,7 @@ export type Effect =
 export class Static {
   typeID: number;
   typeName: string;
-  targetClass: Class;
+  targetClass: number;
   lifetime: number;
   maxMass: number;
   massRegen: number;
@@ -61,7 +61,7 @@ export class SystemModel {
   systemName: string;
   starId: number;
   security: string;
-  trueSec: number
+  trueSec: number;
   securityStatus: number;
   securityClass: string;
   effect: Effect;
