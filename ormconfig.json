@@ -4,8 +4,8 @@
     "port": 3306,
     "username": "test",
     "password": "test",
-    "database": "lost",
-    "entities": ["src/map/data/*.db.ts"],
+    "database": "lost_data",
+    "entities": ["src/lost/entity/*.entity.ts"],
     "migrationsTableName": "migration",
     "migrations": ["migration/*.ts"],
     "cli": {

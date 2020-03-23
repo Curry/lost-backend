@@ -55,6 +55,7 @@ export class Static {
 }
 
 export class SystemModel {
+  id: number;
   regionID: number;
   constellationID: number;
   systemID: number;

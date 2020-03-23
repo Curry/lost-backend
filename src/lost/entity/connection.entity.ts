@@ -1,21 +1,26 @@
 import {
   Entity,
   Column,
-  PrimaryColumn,
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
   JoinColumn,
+  PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm';
 import { Map } from './map.entity';
 import { System } from './system.entity';
 
 @Entity('connection')
+@Unique(['source', 'target', 'mapId'])
 export class Connection {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
+  id: number;
+  
+  @Column()
   source: number;
 
-  @PrimaryColumn()
+  @Column()
   target: number;
 
   @Column()

@@ -54,4 +54,5 @@ export class EveService {
   findCorpById = (id: number) => from(this.corpRepo.findOne(id));
 
   findAllianceById = (id: number) => from(this.allianceRepo.findOne(id));
+  
 }

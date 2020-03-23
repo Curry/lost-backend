@@ -111,7 +111,7 @@ CREATE TABLE `system` (
   `active` tinyint(4) NOT NULL,
   `mapId` int(11) NOT NULL,
   `systemId` int(11) NOT NULL,
-  `alias` varchar(255) NOT NULL,
+  `alias` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_e8ed7c14217f0dca03ba7ad3a71` (`mapId`),
   CONSTRAINT `FK_e8ed7c14217f0dca03ba7ad3a71` FOREIGN KEY (`mapId`) REFERENCES `map` (`mapId`) ON DELETE CASCADE

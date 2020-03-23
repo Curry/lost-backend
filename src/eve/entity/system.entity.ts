@@ -6,10 +6,12 @@ import {
   OneToOne,
   JoinColumn,
   ManyToOne,
+  AfterLoad,
 } from 'typeorm';
 import { SystemStatic } from './systemStatic.entity';
 import { Star } from './star.entity';
 import { Constellation } from './constellation.entity';
+import { Static } from 'src/models/system.model';
 
 @Entity('system')
 export class System {

@@ -1,7 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, Unique } from 'typeorm';
 import { Map } from './map.entity';
 
 @Entity('system')
+@Unique(['mapId', 'systemId'])
 export class System {
   @PrimaryGeneratedColumn()
   id: number;
@@ -21,7 +22,7 @@ export class System {
   @Column()
   systemId: number;
 
-  @Column()
+  @Column({ default: null })
   alias: string;
 
   @ManyToOne(() => Map, { onDelete: 'CASCADE', onUpdate: 'RESTRICT' })

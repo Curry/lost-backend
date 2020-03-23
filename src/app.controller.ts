@@ -1,16 +1,12 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body } from '@nestjs/common';
 import { AppService } from './app.service';
-import { EveService } from './eve/eve.service';
-import { LostService } from './lost/lost.service';
-import { mergeMap, map, combineAll } from 'rxjs/operators';
-import { from } from 'rxjs';
+import { System } from './eve/entity/system.entity';
+import { Connection } from './lost/entity/connection.entity';
 
 @Controller('/')
 export class AppController {
   constructor(
     private readonly service: AppService,
-    private readonly eveService: EveService,
-    private readonly lostService: LostService,
   ) {}
 
   @Get('/token/:code')
@@ -23,20 +19,49 @@ export class AppController {
     return this.service.refreshESIToken(token);
   }
 
-  @Get('/map/:id/systems')
-  getMapSystems(@Param('id') id: number) {
-    return this.lostService.getSystemsByMapId(id).pipe(
-      mergeMap(systems =>
-        from(systems).pipe(
-          map(system => this.eveService.findSystemById(system.systemId)),
-          combineAll(),
-        ),
-      ),
-    );
+  @Get('/map/:mapId/systems')
+  getMapSystems(@Param('mapId') mapId: number) {
+    return this.service.getSystemsByMap(mapId);
   }
 
-  @Get('/map/:id/connections')
-  getMapConnections(@Param('id') id: number) {
-    return this.lostService.getConnectionsByMapId(id);
+  @Post('/map/:mapId/system/:systemId/update')
+  updateSystem(
+    @Param('mapId') mapId: number,
+    @Param('systemId') systemId: number,
+    @Body() system: Partial<System>,
+  ) {
+    return this.service.updateSystem(mapId, systemId, system);
+  }
+
+  @Post('/map/:mapId/system/add')
+  addNewSystem(
+    @Param('mapId') mapId: number,
+    @Body('systemId') systemId: number,
+    @Body('active') active: boolean,
+    @Body('alias') alias: string,
+  ) {
+    return this.service.addNewSystem(mapId, systemId, active, alias);
+  }
+
+  @Get('/map/:mapId/connections')
+  getMapConnections(@Param('mapId') mapId: number) {
+    return this.service.getConnectionsByMap(mapId);
+  }
+
+  @Post('/map/:id/connection/:connectionId/update')
+  updateConnection(
+    @Param('connectionId') connectionId: number,
+    @Body() connection: Partial<Connection>,
+  ) {
+    return this.service.updateConnection(connectionId, connection);
+  }
+
+  @Post('/map/:mapId/connection/add')
+  addNewConnection(
+    @Param('mapId') mapId: number,
+    @Body('source') source: number,
+    @Body('target') target: number,
+  ) {
+    return this.service.addNewConnection(mapId, source, target);
   }
 }
