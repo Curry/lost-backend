@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryColumn, OneToOne, JoinColumn } from 'typeorm';
-import { Faction } from './faction.db';
+import { Faction } from './faction.entity';
 
 @Entity('race')
 export class Race {

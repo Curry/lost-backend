@@ -1,5 +1,5 @@
-import { System } from '../data/system.db';
-import { SystemStatic } from '../data/systemStatic.db';
+import { System } from '../eve/entity/system.entity';
+import { SystemStatic } from '../eve/entity/systemStatic.entity';
 
 export enum Class {
   C1 = 1,
@@ -64,7 +64,7 @@ export class SystemModel {
   trueSec: number;
   securityStatus: number;
   securityClass: string;
-  effect: Effect;
+  effect: string;
   statics: Static[];
 
   constructor(system: System) {

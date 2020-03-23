@@ -7,10 +7,9 @@ import {
   JoinColumn,
   ManyToOne,
 } from 'typeorm';
-import { SystemStatic } from './systemStatic.db';
-import { Effect } from '../models/system';
-import { Star } from './star.db';
-import { Constellation } from './constellation.db';
+import { SystemStatic } from './systemStatic.entity';
+import { Star } from './star.entity';
+import { Constellation } from './constellation.entity';
 
 @Entity('system')
 export class System {
@@ -76,7 +75,7 @@ export class System {
     length: 128,
     nullable: true,
   })
-  effect: Effect;
+  effect: string;
 
   @ManyToOne(() => Constellation, { onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
   @JoinColumn({ name: 'constellationId' })

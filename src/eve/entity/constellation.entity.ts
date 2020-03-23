@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Region } from './region.db';
+import { Region } from './region.entity';
 
 @Entity('constellations')
 export class Constellation {

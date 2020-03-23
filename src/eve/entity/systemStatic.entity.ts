@@ -5,8 +5,8 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { System } from './system.db';
-import { Type } from './type.db';
+import { System } from './system.entity';
+import { Type } from './type.entity';
 
 @Entity('systemStatic')
 export class SystemStatic {

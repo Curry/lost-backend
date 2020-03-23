@@ -1,6 +1,5 @@
-import { SystemModel } from "src/entity/models/system";
-import { Map } from "../data/map.db";
-import { Connection } from "../data/connection.db";
+import { Map } from "../lost/entity/map.entity";
+import { Connection } from "../lost/entity/connection.entity";
 
 export class ConnectionNode {
     system: number;

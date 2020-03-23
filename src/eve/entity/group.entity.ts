@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryColumn, JoinColumn, ManyToOne } from 'typeorm';
-import { Category } from './category.db';
+import { Category } from './category.entity';
 
 @Entity('group')
 export class Group {

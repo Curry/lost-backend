@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Type } from './type.db';
+import { Type } from './type.entity';
 
 @Entity('star')
 export class Star {

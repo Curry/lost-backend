@@ -7,8 +7,8 @@ import {
   UpdateDateColumn,
   JoinColumn,
 } from 'typeorm';
-import { Map } from './map.db';
-import { System } from './system.db';
+import { Map } from './map.entity';
+import { System } from './system.entity';
 
 @Entity('connection')
 export class Connection {
@@ -31,11 +31,11 @@ export class Connection {
   @JoinColumn({ name: 'mapId' })
   map: Map;
 
-  @ManyToOne(() => System, { eager: true, onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
-  @JoinColumn({ name: 'source', referencedColumnName: 'id' })
+  @ManyToOne(() => System, { onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
+  @JoinColumn({ name: 'source' })
   sourceSystem: System;
 
-  @ManyToOne(() => System, { eager: true, onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
-  @JoinColumn({ name: 'target', referencedColumnName: 'id' })
+  @ManyToOne(() => System, { onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
+  @JoinColumn({ name: 'target' })
   targetSystem: System;
 }

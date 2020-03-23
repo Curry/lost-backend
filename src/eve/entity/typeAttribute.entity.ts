@@ -4,10 +4,9 @@ import {
   PrimaryColumn,
   ManyToOne,
   JoinColumn,
-  OneToOne,
 } from 'typeorm';
-import { Type } from './type.db';
-import { AttributeType } from './attributeType.db';
+import { Type } from './type.entity';
+import { AttributeType } from './attributeType.entity';
 
 @Entity('typeAttribute')
 export class TypeAttribute {

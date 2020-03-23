@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryColumn, JoinColumn, ManyToOne } from 'typeorm';
-import { Alliance } from './alliance.db';
-import { Faction } from './faction.db';
+import { Alliance } from './alliance.entity';
+import { Faction } from './faction.entity';
 
 @Entity('corporation')
 export class Corporation {

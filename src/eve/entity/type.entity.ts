@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
-import { TypeAttribute } from './typeAttribute.db';
-import { Group } from './group.db';
+import { TypeAttribute } from './typeAttribute.entity';
+import { Group } from './group.entity';
 
 @Entity('type')
 export class Type {

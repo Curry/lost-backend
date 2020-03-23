@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Map } from './map.db';
+import { Map } from './map.entity';
 
 @Entity('system')
 export class System {
