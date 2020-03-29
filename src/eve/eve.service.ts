@@ -27,17 +27,6 @@ export class EveService {
       }),
     );
 
-  findConnectionSystems = (sourceId: number, destId: number) =>
-    from(this.systemRepo.findByIds([sourceId, destId])).pipe(
-      map(([source, dest]) => ({
-        source: new SystemModel(source),
-        destination: new SystemModel(dest),
-      })),
-      catchError(() => {
-        throw new NotFoundException();
-      }),
-    );
-
   findSystemByName = (name: string): Observable<SystemModel> =>
     from(this.systemRepo.findOne({ systemName: name })).pipe(
       map(val => new SystemModel(val)),

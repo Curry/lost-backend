@@ -66,6 +66,8 @@ export class AppService {
             this.eveService.findSystemById(system.systemId).pipe(
               map(sys => {
                 sys.id = system.id;
+                sys.alias = system.alias;
+                sys.active = system.active;
                 return sys;
               }),
             ),

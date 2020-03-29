@@ -1,4 +1,5 @@
-{
+[
+  {
     "type": "mariadb",
     "host": "localhost",
     "port": 3306,
@@ -7,8 +8,23 @@
     "database": "lost_data",
     "entities": ["src/lost/entity/*.entity.ts"],
     "migrationsTableName": "migration",
-    "migrations": ["migration/*.ts"],
+    "migrations": ["mig-data/*.ts"],
     "cli": {
-        "migrationsDir": "migration"
+      "migrationsDir": "mig-data"
     }
-}
+  },
+  {
+    "type": "mariadb",
+    "host": "localhost",
+    "port": 3306,
+    "username": "test",
+    "password": "test",
+    "database": "lost_eve",
+    "entities": ["src/eve/entity/*.entity.ts"],
+    "migrationsTableName": "migration",
+    "migrations": ["mig-eve/*.ts"],
+    "cli": {
+      "migrationsDir": "mig-eve"
+    }
+  }
+]

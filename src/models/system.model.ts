@@ -55,7 +55,6 @@ export class Static {
 }
 
 export class SystemModel {
-  id: number;
   regionID: number;
   constellationID: number;
   systemID: number;
@@ -67,6 +66,10 @@ export class SystemModel {
   securityClass: string;
   effect: string;
   statics: Static[];
+
+  id: number;
+  alias: string;
+  active: boolean;
 
   constructor(system: System) {
     this.systemID = system.systemId;
