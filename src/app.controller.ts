@@ -1,22 +1,32 @@
-import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  UseGuards,
+  Res,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { System } from './eve/entity/system.entity';
 import { Connection } from './lost/entity/connection.entity';
+import { AuthGuard } from '@nestjs/passport';
+import { Response } from 'express';
 
 @Controller('/')
 export class AppController {
-  constructor(
-    private readonly service: AppService,
-  ) {}
+  constructor(private readonly service: AppService) {}
 
-  @Get('/token/:code')
-  getEsiToken(@Param('code') code: string) {
-    return this.service.getESIAuth(code);
+  @UseGuards(AuthGuard('eveonline-sso'))
+  @Get('/sso')
+  login() {
+    return;
   }
 
-  @Get('token/refresh/:token')
-  refreshEsiToken(@Param('token') token: string) {
-    return this.service.refreshESIToken(token);
+  @UseGuards(AuthGuard('eveonline-sso'))
+  @Get('/callback')
+  callback(@Res() res: Response) {
+    res.redirect('http://localhost:4200/');
   }
 
   @Get('/map/:mapId/systems')

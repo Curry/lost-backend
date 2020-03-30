@@ -1,5 +1,5 @@
-import { Map } from "../lost/entity/map.entity";
-import { Connection } from "../lost/entity/connection.entity";
+import { Map } from '../lost/entity/map.entity';
+import { Connection } from '../lost/entity/connection.entity';
 
 export class ConnectionNode {
     system: number;

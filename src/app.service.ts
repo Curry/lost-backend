@@ -1,5 +1,4 @@
-import { Injectable, HttpService } from '@nestjs/common';
-import { stringify } from 'qs';
+import { Injectable } from '@nestjs/common';
 import { map, mergeMap, combineAll } from 'rxjs/operators';
 import { EveService } from './eve/eve.service';
 import { LostService } from './lost/lost.service';
@@ -10,53 +9,9 @@ import { Connection } from './lost/entity/connection.entity';
 @Injectable()
 export class AppService {
   constructor(
-    private http: HttpService,
     private readonly eveService: EveService,
     private readonly lostService: LostService,
   ) {}
-
-  getESIAuth = (code: string) =>
-    this.http
-      .post(
-        'https://login.eveonline.com/v2/oauth/token',
-        stringify({
-          // eslint-disable-next-line @typescript-eslint/camelcase
-          grant_type: 'authorization_code',
-          code: code,
-        }),
-        {
-          headers: {
-            Authorization: `Basic ${Buffer.from(
-              '88f6459ddde5474f99feda81918307e1:dZLJrBJP2B6XWo1kGms2aWI8PgCnRGmGfxUkFpzw',
-            ).toString('base64')}`,
-            'Content-Type': 'application/x-www-form-urlencoded',
-            Host: 'login.eveonline.com',
-          },
-        },
-      )
-      .pipe(map(val => val.data));
-
-  refreshESIToken = (token: string) =>
-    this.http
-      .post(
-        'https://login.eveonline.com/v2/oauth/token',
-        stringify({
-          // eslint-disable-next-line @typescript-eslint/camelcase
-          grant_type: 'refresh_token',
-          // eslint-disable-next-line @typescript-eslint/camelcase
-          refresh_token: token,
-        }),
-        {
-          headers: {
-            Authorization: `Basic ${Buffer.from(
-              '88f6459ddde5474f99feda81918307e1:dZLJrBJP2B6XWo1kGms2aWI8PgCnRGmGfxUkFpzw',
-            ).toString('base64')}`,
-            'Content-Type': 'application/x-www-form-urlencoded',
-            Host: 'login.eveonline.com',
-          },
-        },
-      )
-      .pipe(map(val => val.data));
 
   getSystemsByMap = (mapId: number) =>
     this.lostService.getSystemsByMapId(mapId).pipe(
