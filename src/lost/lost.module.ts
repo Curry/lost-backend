@@ -6,9 +6,10 @@ import { Connection } from './entity/connection.entity';
 import { LostService } from './lost.service';
 import { SSOStrategy } from './sso.strategy';
 import { PassportModule } from '@nestjs/passport';
+import { Character } from './entity/character.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Map, Connection, System], 'data'), PassportModule],
+  imports: [TypeOrmModule.forFeature([Map, Connection, System, Character], 'data'), PassportModule],
   exports: [LostService, SSOStrategy],
   providers: [LostService, SSOStrategy],
 })

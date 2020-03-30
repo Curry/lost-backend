@@ -17,13 +17,13 @@ import { Response } from 'express';
 export class AppController {
   constructor(private readonly service: AppService) {}
 
-  @UseGuards(AuthGuard('eveonline-sso'))
+  @UseGuards(AuthGuard('oauth2'))
   @Get('/sso')
   login() {
     return;
   }
 
-  @UseGuards(AuthGuard('eveonline-sso'))
+  @UseGuards(AuthGuard('oauth2'))
   @Get('/callback')
   callback(@Res() res: Response) {
     res.redirect('http://localhost:4200/');

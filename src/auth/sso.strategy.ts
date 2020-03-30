@@ -2,11 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Strategy, InternalOAuthError } from 'passport-oauth2';
 import { PassportStrategy } from '@nestjs/passport';
 import { Repository } from 'typeorm';
-import { Character } from './entity/character.entity';
+import { Character } from '../lost/entity/character.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IEveRawProfile } from 'src/models/esi.model';
-import { of, from } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
 
 @Injectable()
 export class SSOStrategy extends PassportStrategy(Strategy) {
@@ -25,36 +23,32 @@ export class SSOStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  validate = (
+  async validate(
     accessToken: string,
     refreshToken: string,
     profile: IEveRawProfile,
     done: (err: any, result?: any, response?: any) => any,
-  ) =>
-    from(this.charRepo.findOne({ characterId: profile.CharacterID }))
-      .pipe(
-        mergeMap(val =>
-          from(
-            this.charRepo.save({
-              id: val.id || undefined,
-              ownerHash: profile.CharacterOwnerHash,
-              esiAccessToken: accessToken,
-              esiAccessTokenExpires: profile.ExpiresOn,
-              esiRefreshToken: refreshToken,
-              esiScopes: profile.Scopes,
-              characterId: profile.CharacterID,
-              lastLogin: new Date(),
-            } as Character),
-          ),
-        ),
-        mergeMap(val => of(done(null, val))),
-      )
-      .toPromise();
+  ) {
+    const existingChar = await this.charRepo.findOne({
+      characterId: profile.CharacterID,
+    });
+    await this.charRepo.save({
+      id: existingChar.id || undefined,
+      ownerHash: profile.CharacterOwnerHash,
+      esiAccessToken: accessToken,
+      esiAccessTokenExpires: profile.ExpiresOn,
+      esiRefreshToken: refreshToken,
+      esiScopes: profile.Scopes,
+      characterId: profile.CharacterID,
+      lastLogin: new Date(),
+    } as Character);
+    done(null, profile);
+  }
 
-  userProfile = (
+  async userProfile(
     accessToken: string,
     done: (err: any, result?: any, response?: any) => any,
-  ) => {
+  ) {
     this._oauth2.useAuthorizationHeaderforGET(true);
     this._oauth2.get(
       'https://login.eveonline.com/oauth/verify',
@@ -69,5 +63,5 @@ export class SSOStrategy extends PassportStrategy(Strategy) {
         done(null, profile);
       },
     );
-  };
+  }
 }

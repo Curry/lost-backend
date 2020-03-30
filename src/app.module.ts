@@ -4,6 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { EveModule } from './eve/eve.module';
 import { LostModule } from './lost/lost.module';
+import { EsiModule } from './esi/esi.module';
+import { AuthModule } from './auth/auth.module';
 
 const defaultOptions: TypeOrmModuleOptions = {
   type: 'mariadb',
@@ -29,6 +31,8 @@ const defaultOptions: TypeOrmModuleOptions = {
     HttpModule,
     EveModule,
     LostModule,
+    EsiModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

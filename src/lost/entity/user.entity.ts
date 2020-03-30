@@ -1,16 +1,27 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Column, OneToMany, JoinColumn } from "typeorm";
+import { Character } from "./character.entity";
 
 @Entity('user')
 export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    characterId: number;
+    @CreateDateColumn()
+    created: Date;
+
+    @UpdateDateColumn()
+    updated: Date;
+
+    @Column({ default: false })
+    active: boolean;
 
     @Column()
-    userName: string;
+    name: string;
 
     @Column()
-    password: string;
+    email: string;
+
+    // @OneToMany(() => Character, character => character.user)
+    // @JoinColumn({ referencedColumnName: 'userId' })
+    // characters: Character[];
 }

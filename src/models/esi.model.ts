@@ -29,3 +29,13 @@ export class ESICorporation {
     war_eligible: boolean;
     faction_id?: number;
 }
+
+export interface IEveRawProfile {
+    CharacterID: number;
+    CharacterName: string;
+    ExpiresOn: Date;
+    Scopes: string;
+    TokenType: string;
+    CharacterOwnerHash: string;
+    IntellectualProperty: string;
+}
