@@ -6,6 +6,8 @@ import { Map } from './entity/map.entity';
 import { Connection } from './entity/connection.entity';
 import { System } from './entity/system.entity';
 import { catchError } from 'rxjs/operators';
+import { Character } from './entity/character.entity';
+import { IEveRawProfile } from 'src/models/esi.model';
 
 @Injectable()
 export class LostService {
@@ -16,6 +18,8 @@ export class LostService {
     private readonly connRepo: Repository<Connection>,
     @InjectRepository(System, 'data')
     private readonly sysRepo: Repository<System>,
+    @InjectRepository(Character, 'data')
+    private readonly charRepo: Repository<Character>,
   ) {}
   getSystemsByMapId = (id: number) => from(this.sysRepo.find({ mapId: id }));
 
@@ -54,5 +58,41 @@ export class LostService {
         source: source,
         target: target,
       } as Connection),
-    )
+    );
+
+  findCharacter = (characterId: number) =>
+    from(this.charRepo.findOne({ characterId: characterId }));
+
+  saveCharacter = (
+    id: number,
+    accessToken: string,
+    refreshToken: string,
+    profile: IEveRawProfile,
+  ) =>
+    from(
+      this.charRepo.save({
+        id: id,
+        esiAccessToken: accessToken,
+        esiRefreshToken: refreshToken,
+        ownerHash: profile.CharacterOwnerHash,
+        esiAccessTokenExpires: profile.ExpiresOn,
+        esiScopes: profile.Scopes,
+        characterId: profile.CharacterID,
+        lastLogin: new Date(),
+      } as Character),
+    );
+
+  updateCharAccessToken = (refreshToken: string, accessToken: string) => {
+    const newDate = new Date();
+    newDate.setSeconds(newDate.getSeconds() + 1200);
+    return from(
+      this.charRepo.update(
+        { esiRefreshToken: refreshToken },
+        {
+          esiAccessToken: accessToken,
+          esiAccessTokenExpires: newDate,
+        },
+      ),
+    );
+  };
 }

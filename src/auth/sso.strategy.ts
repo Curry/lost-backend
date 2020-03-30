@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { Strategy, InternalOAuthError } from 'passport-oauth2';
 import { PassportStrategy } from '@nestjs/passport';
-import { Repository } from 'typeorm';
-import { Character } from '../lost/entity/character.entity';
-import { InjectRepository } from '@nestjs/typeorm';
 import { IEveRawProfile } from 'src/models/esi.model';
+import { of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { AuthService } from './auth.service';
+import { use as refreshUse } from 'passport-oauth2-refresh';
 
 @Injectable()
 export class SSOStrategy extends PassportStrategy(Strategy) {
   constructor(
-    @InjectRepository(Character, 'data')
-    private charRepo: Repository<Character>,
+    private readonly authService: AuthService,
   ) {
     super({
       authorizationURL: 'https://login.eveonline.com/oauth/authorize',
@@ -21,34 +21,24 @@ export class SSOStrategy extends PassportStrategy(Strategy) {
         'esi-location.read_location.v1 esi-location.read_ship_type.v1 esi-ui.write_waypoint.v1 esi-location.read_online.v1',
       callbackURL: 'http://localhost:3000/callback/',
     });
+    refreshUse(this);
   }
 
-  async validate(
+  validate = (
     accessToken: string,
     refreshToken: string,
     profile: IEveRawProfile,
-    done: (err: any, result?: any, response?: any) => any,
-  ) {
-    const existingChar = await this.charRepo.findOne({
-      characterId: profile.CharacterID,
-    });
-    await this.charRepo.save({
-      id: existingChar.id || undefined,
-      ownerHash: profile.CharacterOwnerHash,
-      esiAccessToken: accessToken,
-      esiAccessTokenExpires: profile.ExpiresOn,
-      esiRefreshToken: refreshToken,
-      esiScopes: profile.Scopes,
-      characterId: profile.CharacterID,
-      lastLogin: new Date(),
-    } as Character);
-    done(null, profile);
-  }
+    done: any
+  ) =>
+    this.authService
+      .saveUser(accessToken, refreshToken, profile)
+      .pipe(mergeMap(val => of(done(null, val))))
+      .toPromise();
 
-  async userProfile(
+  userProfile = (
     accessToken: string,
     done: (err: any, result?: any, response?: any) => any,
-  ) {
+  ) => {
     this._oauth2.useAuthorizationHeaderforGET(true);
     this._oauth2.get(
       'https://login.eveonline.com/oauth/verify',
@@ -63,5 +53,5 @@ export class SSOStrategy extends PassportStrategy(Strategy) {
         done(null, profile);
       },
     );
-  }
+  };
 }
