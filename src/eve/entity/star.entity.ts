@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 import { Type } from './type.entity';
+import { StarType } from './starType.entity';
 
 @Entity('star')
 export class Star {
@@ -53,8 +54,8 @@ export class Star {
   })
   typeId: number;
 
-  @ManyToOne(() => Type, { eager: true, onDelete: 'SET NULL', onUpdate: 'RESTRICT' })
-  @JoinColumn({ name: 'typeId' })
-  type: Type;
+  @OneToOne(() => StarType, { eager: true })
+  @JoinColumn()
+  starType: StarType;
 
 }

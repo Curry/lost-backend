@@ -13,18 +13,20 @@ export class AppService {
     private readonly lostService: LostService,
   ) {}
 
+  getSystems = () => this.eveService.findSystemById(31000637);
+
   getSystemsByMap = (mapId: number) =>
     this.lostService.getSystemsByMapId(mapId).pipe(
       mergeMap(systems =>
         from(systems).pipe(
           map(system =>
             this.eveService.findSystemById(system.systemId).pipe(
-              map(sys => {
-                sys.id = system.id;
-                sys.alias = system.alias;
-                sys.active = system.active;
-                return sys;
-              }),
+              map(sys => ({
+                id: system.id,
+                alias: system.alias,
+                active: system.active,
+                system: sys
+              })),
             ),
           ),
           combineAll(),

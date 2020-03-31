@@ -1,36 +1,32 @@
 import {
   Entity,
   Column,
-  PrimaryColumn,
   ManyToOne,
   JoinColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Type } from './type.entity';
 import { AttributeType } from './attributeType.entity';
 
 @Entity('typeAttribute')
 export class TypeAttribute {
-  @PrimaryColumn({
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({
     type: 'int',
     width: 11,
   })
   typeID: number;
 
-  @PrimaryColumn({
+  @Column({
     type: 'int',
     width: 11,
   })
   attributeID: number;
 
   @Column('float', { nullable: true })
-  valueFloat: number;
-
-  @Column({
-    type: 'int',
-    width: 11,
-    nullable: true,
-  })
-  valueInt: number;
+  value: number;
 
   @ManyToOne(
     () => Type,

@@ -12,55 +12,36 @@ export class Station {
   })
   stationId: number;
 
-  @Column({
-    type: 'varchar',
-    length: 128
-  })
+  @Column()
   stationName: string;
 
-  @Column('text', { nullable: true })
+  @Column({ nullable: true })
   services: string;
 
   allServices: string[];
 
-  @Column({
-    type: 'int',
-    width: 11,
-    nullable: true,
-  })
+  @Column({ nullable: true })
   systemId: number;
 
   @ManyToOne(() => System, { onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
   @JoinColumn({ name: 'systemId' })
   system: Promise<System>;
 
-  @Column({
-    type: 'int',
-    width: 11,
-    nullable: true,
-  })
+  @Column({ nullable: true })
   typeId: number;
 
   @ManyToOne(() => Type, { onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
   @JoinColumn({ name: 'typeId' })
   type: Type;
 
-  @Column({
-    type: 'int',
-    width: 11,
-    nullable: true,
-  })
+  @Column({ nullable: true })
   corporationId: number;
 
   @ManyToOne(() => Corporation, { onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
   @JoinColumn({ name: 'corporationId' })
   corporation: Promise<Corporation>;
 
-  @Column({
-    type: 'int',
-    width: 11,
-    nullable: true,
-  })
+  @Column({ nullable: true })
   raceId: number;
 
   @ManyToOne(() => Race, { onDelete: 'CASCADE', onUpdate: 'RESTRICT' })

@@ -1,30 +1,26 @@
-import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryColumn,
+  OneToMany,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { TypeAttribute } from './typeAttribute.entity';
 import { Group } from './group.entity';
 
 @Entity('type')
 export class Type {
-  @PrimaryColumn({
-    type: 'int',
-    width: 11
-  })
+  @PrimaryColumn()
   typeID: number;
 
-  @Column({
-    type: 'varchar',
-    length: 100,
-    nullable: true,
-  })
+  @Column({ nullable: true })
   typeName: string;
 
   @Column('text', { nullable: true })
   description: string;
 
-  @Column({
-    type: 'int',
-    width: 11,
-    nullable: true
-  })
+  @Column({ nullable: true })
   groupId: number;
 
   @OneToMany(
@@ -37,7 +33,11 @@ export class Type {
   @JoinColumn({ name: 'typeID' })
   typeAttributes: TypeAttribute[];
 
-  @ManyToOne(() => Group, { eager: true, onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
+  @ManyToOne(() => Group, {
+    eager: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'RESTRICT',
+  })
   @JoinColumn({ name: 'groupId' })
   group: Group;
 }

@@ -1,5 +1,5 @@
 import { System } from '../eve/entity/system.entity';
-import { SystemStatic } from '../eve/entity/systemStatic.entity';
+import { Static } from 'src/eve/entity/static.entity';
 
 export enum Class {
   C1 = 1,
@@ -13,45 +13,6 @@ export enum Class {
   NULL,
   THERA = 12,
   SHATTERED,
-}
-
-export type Effect =
-  | 'magnetar'
-  | 'cataclysmic'
-  | 'redGiant'
-  | 'pulsar'
-  | 'wolfRayet'
-  | 'blackHole';
-
-export class Static {
-  typeID: number;
-  typeName: string;
-  targetClass: number;
-  lifetime: number;
-  maxMass: number;
-  massRegen: number;
-  maxOnePass: number;
-
-  constructor(systemStatic: SystemStatic) {
-    this.typeID = systemStatic.typeId;
-    this.typeName = systemStatic.type.typeName;
-    const attributes = systemStatic.type.typeAttributes;
-    this.targetClass = attributes.find(
-      val => val.attributeID === 1381,
-    ).valueFloat;
-    this.lifetime = attributes.find(
-      val => val.attributeID === 1382,
-    ).valueFloat;
-    this.maxMass = attributes.find(
-      val => val.attributeID === 1383,
-    ).valueFloat;
-    this.massRegen = attributes.find(
-      val => val.attributeID === 1384,
-    ).valueFloat;
-    this.maxOnePass = attributes.find(
-      val => val.attributeID === 1385,
-    ).valueFloat;
-  }
 }
 
 export class SystemModel {
@@ -72,7 +33,7 @@ export class SystemModel {
   active: boolean;
 
   constructor(system: System) {
-    this.systemID = system.systemId;
+    this.systemID = system.id;
     this.constellationID = system.constellationId;
     this.regionID = system.regionId;
     this.systemName = system.systemName;
@@ -82,6 +43,6 @@ export class SystemModel {
     this.securityStatus = system.securityStatus;
     this.securityClass = system.securityClass;
     this.effect = system.effect;
-    this.statics = system.statics.map(systemStatic => new Static(systemStatic));
+    this.statics = system.statics;
   }
 }
