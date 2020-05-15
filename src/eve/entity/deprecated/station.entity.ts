@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryColumn, JoinColumn, AfterLoad, ManyToOne } from 'typeorm';
-import { System } from './system.entity';
+import { System } from '../system.entity';
 import { Type } from './type.entity';
-import { Corporation } from './corporation.entity';
-import { Race } from './race.entity';
+import { Corporation } from '../corporation.entity';
+import { Race } from '../race.entity';
 
 @Entity('station')
 export class Station {

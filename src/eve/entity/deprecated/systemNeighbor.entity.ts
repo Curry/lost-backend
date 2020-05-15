@@ -6,7 +6,7 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
-import { System } from './system.entity';
+import { System } from '../system.entity';
 
 @Entity('systemNeighbor')
 export class SystemNeighbor {

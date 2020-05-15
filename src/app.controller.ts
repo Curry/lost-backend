@@ -17,6 +17,10 @@ import { Response } from 'express';
 export class AppController {
   constructor(private readonly service: AppService) {}
 
+  @Get('/test')
+  test() {
+  }
+
   @UseGuards(AuthGuard('oauth2'))
   @Get('/sso')
   login() {

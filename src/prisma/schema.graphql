@@ -1,0 +1,1999 @@
+# source: http://localhost:4466
+# timestamp: Tue Mar 31 2020 08:00:03 GMT-0500 (Central Daylight Time)
+
+type AggregateAlliance {
+  count: Int!
+}
+
+type AggregateCorporation {
+  count: Int!
+}
+
+type AggregateFaction {
+  count: Int!
+}
+
+type AggregateStatic {
+  count: Int!
+}
+
+type AggregateSystem {
+  count: Int!
+}
+
+type Alliance {
+  id: Int!
+  name: String!
+  ticker: String!
+  dateFounded: DateTime
+  factionId: Faction
+}
+
+"""A connection to a list of items."""
+type AllianceConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AllianceEdge]!
+  aggregate: AggregateAlliance!
+}
+
+input AllianceCreateInput {
+  name: String!
+  ticker: String!
+  dateFounded: DateTime
+  factionId: FactionCreateOneInput
+}
+
+input AllianceCreateOneInput {
+  create: AllianceCreateInput
+  connect: AllianceWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type AllianceEdge {
+  """The item at the end of the edge."""
+  node: Alliance!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum AllianceOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  ticker_ASC
+  ticker_DESC
+  dateFounded_ASC
+  dateFounded_DESC
+}
+
+type AlliancePreviousValues {
+  id: Int!
+  name: String!
+  ticker: String!
+  dateFounded: DateTime
+}
+
+type AllianceSubscriptionPayload {
+  mutation: MutationType!
+  node: Alliance
+  updatedFields: [String!]
+  previousValues: AlliancePreviousValues
+}
+
+input AllianceSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AllianceSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AllianceSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AllianceSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: AllianceWhereInput
+}
+
+input AllianceUpdateDataInput {
+  name: String
+  ticker: String
+  dateFounded: DateTime
+  factionId: FactionUpdateOneInput
+}
+
+input AllianceUpdateInput {
+  name: String
+  ticker: String
+  dateFounded: DateTime
+  factionId: FactionUpdateOneInput
+}
+
+input AllianceUpdateManyMutationInput {
+  name: String
+  ticker: String
+  dateFounded: DateTime
+}
+
+input AllianceUpdateOneInput {
+  create: AllianceCreateInput
+  connect: AllianceWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: AllianceUpdateDataInput
+  upsert: AllianceUpsertNestedInput
+}
+
+input AllianceUpsertNestedInput {
+  update: AllianceUpdateDataInput!
+  create: AllianceCreateInput!
+}
+
+input AllianceWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AllianceWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AllianceWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AllianceWhereInput!]
+  id: Int
+
+  """All values that are not equal to given value."""
+  id_not: Int
+
+  """All values that are contained in given list."""
+  id_in: [Int!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [Int!]
+
+  """All values less than the given value."""
+  id_lt: Int
+
+  """All values less than or equal the given value."""
+  id_lte: Int
+
+  """All values greater than the given value."""
+  id_gt: Int
+
+  """All values greater than or equal the given value."""
+  id_gte: Int
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  ticker: String
+
+  """All values that are not equal to given value."""
+  ticker_not: String
+
+  """All values that are contained in given list."""
+  ticker_in: [String!]
+
+  """All values that are not contained in given list."""
+  ticker_not_in: [String!]
+
+  """All values less than the given value."""
+  ticker_lt: String
+
+  """All values less than or equal the given value."""
+  ticker_lte: String
+
+  """All values greater than the given value."""
+  ticker_gt: String
+
+  """All values greater than or equal the given value."""
+  ticker_gte: String
+
+  """All values containing the given string."""
+  ticker_contains: String
+
+  """All values not containing the given string."""
+  ticker_not_contains: String
+
+  """All values starting with the given string."""
+  ticker_starts_with: String
+
+  """All values not starting with the given string."""
+  ticker_not_starts_with: String
+
+  """All values ending with the given string."""
+  ticker_ends_with: String
+
+  """All values not ending with the given string."""
+  ticker_not_ends_with: String
+  dateFounded: DateTime
+
+  """All values that are not equal to given value."""
+  dateFounded_not: DateTime
+
+  """All values that are contained in given list."""
+  dateFounded_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  dateFounded_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  dateFounded_lt: DateTime
+
+  """All values less than or equal the given value."""
+  dateFounded_lte: DateTime
+
+  """All values greater than the given value."""
+  dateFounded_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  dateFounded_gte: DateTime
+  factionId: FactionWhereInput
+}
+
+input AllianceWhereUniqueInput {
+  id: Int
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+type Corporation {
+  id: Int!
+  name: String!
+  ticker: String!
+  dateFounded: DateTime
+  memberCount: Int!
+  isNPC: Boolean!
+  allianceId: Alliance
+  factionId: Faction
+}
+
+"""A connection to a list of items."""
+type CorporationConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CorporationEdge]!
+  aggregate: AggregateCorporation!
+}
+
+input CorporationCreateInput {
+  name: String!
+  ticker: String!
+  dateFounded: DateTime
+  memberCount: Int!
+  isNPC: Boolean!
+  allianceId: AllianceCreateOneInput
+  factionId: FactionCreateOneInput
+}
+
+"""An edge in a connection."""
+type CorporationEdge {
+  """The item at the end of the edge."""
+  node: Corporation!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CorporationOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  ticker_ASC
+  ticker_DESC
+  dateFounded_ASC
+  dateFounded_DESC
+  memberCount_ASC
+  memberCount_DESC
+  isNPC_ASC
+  isNPC_DESC
+}
+
+type CorporationPreviousValues {
+  id: Int!
+  name: String!
+  ticker: String!
+  dateFounded: DateTime
+  memberCount: Int!
+  isNPC: Boolean!
+}
+
+type CorporationSubscriptionPayload {
+  mutation: MutationType!
+  node: Corporation
+  updatedFields: [String!]
+  previousValues: CorporationPreviousValues
+}
+
+input CorporationSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CorporationSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CorporationSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CorporationSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CorporationWhereInput
+}
+
+input CorporationUpdateInput {
+  name: String
+  ticker: String
+  dateFounded: DateTime
+  memberCount: Int
+  isNPC: Boolean
+  allianceId: AllianceUpdateOneInput
+  factionId: FactionUpdateOneInput
+}
+
+input CorporationUpdateManyMutationInput {
+  name: String
+  ticker: String
+  dateFounded: DateTime
+  memberCount: Int
+  isNPC: Boolean
+}
+
+input CorporationWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CorporationWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CorporationWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CorporationWhereInput!]
+  id: Int
+
+  """All values that are not equal to given value."""
+  id_not: Int
+
+  """All values that are contained in given list."""
+  id_in: [Int!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [Int!]
+
+  """All values less than the given value."""
+  id_lt: Int
+
+  """All values less than or equal the given value."""
+  id_lte: Int
+
+  """All values greater than the given value."""
+  id_gt: Int
+
+  """All values greater than or equal the given value."""
+  id_gte: Int
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  ticker: String
+
+  """All values that are not equal to given value."""
+  ticker_not: String
+
+  """All values that are contained in given list."""
+  ticker_in: [String!]
+
+  """All values that are not contained in given list."""
+  ticker_not_in: [String!]
+
+  """All values less than the given value."""
+  ticker_lt: String
+
+  """All values less than or equal the given value."""
+  ticker_lte: String
+
+  """All values greater than the given value."""
+  ticker_gt: String
+
+  """All values greater than or equal the given value."""
+  ticker_gte: String
+
+  """All values containing the given string."""
+  ticker_contains: String
+
+  """All values not containing the given string."""
+  ticker_not_contains: String
+
+  """All values starting with the given string."""
+  ticker_starts_with: String
+
+  """All values not starting with the given string."""
+  ticker_not_starts_with: String
+
+  """All values ending with the given string."""
+  ticker_ends_with: String
+
+  """All values not ending with the given string."""
+  ticker_not_ends_with: String
+  dateFounded: DateTime
+
+  """All values that are not equal to given value."""
+  dateFounded_not: DateTime
+
+  """All values that are contained in given list."""
+  dateFounded_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  dateFounded_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  dateFounded_lt: DateTime
+
+  """All values less than or equal the given value."""
+  dateFounded_lte: DateTime
+
+  """All values greater than the given value."""
+  dateFounded_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  dateFounded_gte: DateTime
+  memberCount: Int
+
+  """All values that are not equal to given value."""
+  memberCount_not: Int
+
+  """All values that are contained in given list."""
+  memberCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  memberCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  memberCount_lt: Int
+
+  """All values less than or equal the given value."""
+  memberCount_lte: Int
+
+  """All values greater than the given value."""
+  memberCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  memberCount_gte: Int
+  isNPC: Boolean
+
+  """All values that are not equal to given value."""
+  isNPC_not: Boolean
+  allianceId: AllianceWhereInput
+  factionId: FactionWhereInput
+}
+
+input CorporationWhereUniqueInput {
+  id: Int
+}
+
+scalar DateTime
+
+type Faction {
+  id: Int!
+  name: String!
+  description: String
+  sizeFactor: Int!
+  stationCount: Int!
+  stationSystemCount: Int!
+}
+
+"""A connection to a list of items."""
+type FactionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FactionEdge]!
+  aggregate: AggregateFaction!
+}
+
+input FactionCreateInput {
+  name: String!
+  description: String
+  sizeFactor: Int!
+  stationCount: Int!
+  stationSystemCount: Int!
+}
+
+input FactionCreateOneInput {
+  create: FactionCreateInput
+  connect: FactionWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type FactionEdge {
+  """The item at the end of the edge."""
+  node: Faction!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FactionOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  sizeFactor_ASC
+  sizeFactor_DESC
+  stationCount_ASC
+  stationCount_DESC
+  stationSystemCount_ASC
+  stationSystemCount_DESC
+}
+
+type FactionPreviousValues {
+  id: Int!
+  name: String!
+  description: String
+  sizeFactor: Int!
+  stationCount: Int!
+  stationSystemCount: Int!
+}
+
+type FactionSubscriptionPayload {
+  mutation: MutationType!
+  node: Faction
+  updatedFields: [String!]
+  previousValues: FactionPreviousValues
+}
+
+input FactionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FactionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FactionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FactionSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FactionWhereInput
+}
+
+input FactionUpdateDataInput {
+  name: String
+  description: String
+  sizeFactor: Int
+  stationCount: Int
+  stationSystemCount: Int
+}
+
+input FactionUpdateInput {
+  name: String
+  description: String
+  sizeFactor: Int
+  stationCount: Int
+  stationSystemCount: Int
+}
+
+input FactionUpdateManyMutationInput {
+  name: String
+  description: String
+  sizeFactor: Int
+  stationCount: Int
+  stationSystemCount: Int
+}
+
+input FactionUpdateOneInput {
+  create: FactionCreateInput
+  connect: FactionWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: FactionUpdateDataInput
+  upsert: FactionUpsertNestedInput
+}
+
+input FactionUpsertNestedInput {
+  update: FactionUpdateDataInput!
+  create: FactionCreateInput!
+}
+
+input FactionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FactionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FactionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FactionWhereInput!]
+  id: Int
+
+  """All values that are not equal to given value."""
+  id_not: Int
+
+  """All values that are contained in given list."""
+  id_in: [Int!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [Int!]
+
+  """All values less than the given value."""
+  id_lt: Int
+
+  """All values less than or equal the given value."""
+  id_lte: Int
+
+  """All values greater than the given value."""
+  id_gt: Int
+
+  """All values greater than or equal the given value."""
+  id_gte: Int
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  sizeFactor: Int
+
+  """All values that are not equal to given value."""
+  sizeFactor_not: Int
+
+  """All values that are contained in given list."""
+  sizeFactor_in: [Int!]
+
+  """All values that are not contained in given list."""
+  sizeFactor_not_in: [Int!]
+
+  """All values less than the given value."""
+  sizeFactor_lt: Int
+
+  """All values less than or equal the given value."""
+  sizeFactor_lte: Int
+
+  """All values greater than the given value."""
+  sizeFactor_gt: Int
+
+  """All values greater than or equal the given value."""
+  sizeFactor_gte: Int
+  stationCount: Int
+
+  """All values that are not equal to given value."""
+  stationCount_not: Int
+
+  """All values that are contained in given list."""
+  stationCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  stationCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  stationCount_lt: Int
+
+  """All values less than or equal the given value."""
+  stationCount_lte: Int
+
+  """All values greater than the given value."""
+  stationCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  stationCount_gte: Int
+  stationSystemCount: Int
+
+  """All values that are not equal to given value."""
+  stationSystemCount_not: Int
+
+  """All values that are contained in given list."""
+  stationSystemCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  stationSystemCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  stationSystemCount_lt: Int
+
+  """All values less than or equal the given value."""
+  stationSystemCount_lte: Int
+
+  """All values greater than the given value."""
+  stationSystemCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  stationSystemCount_gte: Int
+}
+
+input FactionWhereUniqueInput {
+  id: Int
+}
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createSystem(data: SystemCreateInput!): System!
+  createCorporation(data: CorporationCreateInput!): Corporation!
+  createStatic(data: StaticCreateInput!): Static!
+  createFaction(data: FactionCreateInput!): Faction!
+  createAlliance(data: AllianceCreateInput!): Alliance!
+  updateSystem(data: SystemUpdateInput!, where: SystemWhereUniqueInput!): System
+  updateCorporation(data: CorporationUpdateInput!, where: CorporationWhereUniqueInput!): Corporation
+  updateStatic(data: StaticUpdateInput!, where: StaticWhereUniqueInput!): Static
+  updateFaction(data: FactionUpdateInput!, where: FactionWhereUniqueInput!): Faction
+  updateAlliance(data: AllianceUpdateInput!, where: AllianceWhereUniqueInput!): Alliance
+  deleteSystem(where: SystemWhereUniqueInput!): System
+  deleteCorporation(where: CorporationWhereUniqueInput!): Corporation
+  deleteStatic(where: StaticWhereUniqueInput!): Static
+  deleteFaction(where: FactionWhereUniqueInput!): Faction
+  deleteAlliance(where: AllianceWhereUniqueInput!): Alliance
+  upsertSystem(where: SystemWhereUniqueInput!, create: SystemCreateInput!, update: SystemUpdateInput!): System!
+  upsertCorporation(where: CorporationWhereUniqueInput!, create: CorporationCreateInput!, update: CorporationUpdateInput!): Corporation!
+  upsertStatic(where: StaticWhereUniqueInput!, create: StaticCreateInput!, update: StaticUpdateInput!): Static!
+  upsertFaction(where: FactionWhereUniqueInput!, create: FactionCreateInput!, update: FactionUpdateInput!): Faction!
+  upsertAlliance(where: AllianceWhereUniqueInput!, create: AllianceCreateInput!, update: AllianceUpdateInput!): Alliance!
+  updateManySystems(data: SystemUpdateManyMutationInput!, where: SystemWhereInput): BatchPayload!
+  updateManyCorporations(data: CorporationUpdateManyMutationInput!, where: CorporationWhereInput): BatchPayload!
+  updateManyStatics(data: StaticUpdateManyMutationInput!, where: StaticWhereInput): BatchPayload!
+  updateManyFactions(data: FactionUpdateManyMutationInput!, where: FactionWhereInput): BatchPayload!
+  updateManyAlliances(data: AllianceUpdateManyMutationInput!, where: AllianceWhereInput): BatchPayload!
+  deleteManySystems(where: SystemWhereInput): BatchPayload!
+  deleteManyCorporations(where: CorporationWhereInput): BatchPayload!
+  deleteManyStatics(where: StaticWhereInput): BatchPayload!
+  deleteManyFactions(where: FactionWhereInput): BatchPayload!
+  deleteManyAlliances(where: AllianceWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Query {
+  systems(where: SystemWhereInput, orderBy: SystemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [System]!
+  corporations(where: CorporationWhereInput, orderBy: CorporationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Corporation]!
+  statics(where: StaticWhereInput, orderBy: StaticOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Static]!
+  factions(where: FactionWhereInput, orderBy: FactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Faction]!
+  alliances(where: AllianceWhereInput, orderBy: AllianceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Alliance]!
+  system(where: SystemWhereUniqueInput!): System
+  corporation(where: CorporationWhereUniqueInput!): Corporation
+  static(where: StaticWhereUniqueInput!): Static
+  faction(where: FactionWhereUniqueInput!): Faction
+  alliance(where: AllianceWhereUniqueInput!): Alliance
+  systemsConnection(where: SystemWhereInput, orderBy: SystemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SystemConnection!
+  corporationsConnection(where: CorporationWhereInput, orderBy: CorporationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CorporationConnection!
+  staticsConnection(where: StaticWhereInput, orderBy: StaticOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StaticConnection!
+  factionsConnection(where: FactionWhereInput, orderBy: FactionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FactionConnection!
+  alliancesConnection(where: AllianceWhereInput, orderBy: AllianceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AllianceConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Static {
+  id: Int!
+  name: String!
+  targetClass: Float!
+  lifetime: Float!
+  maxMass: Float!
+  massRegen: Float!
+  maxOnePass: Float!
+}
+
+"""A connection to a list of items."""
+type StaticConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [StaticEdge]!
+  aggregate: AggregateStatic!
+}
+
+input StaticCreateInput {
+  name: String!
+  targetClass: Float!
+  lifetime: Float!
+  maxMass: Float!
+  massRegen: Float!
+  maxOnePass: Float!
+}
+
+input StaticCreateManyInput {
+  create: [StaticCreateInput!]
+  connect: [StaticWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type StaticEdge {
+  """The item at the end of the edge."""
+  node: Static!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum StaticOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  targetClass_ASC
+  targetClass_DESC
+  lifetime_ASC
+  lifetime_DESC
+  maxMass_ASC
+  maxMass_DESC
+  massRegen_ASC
+  massRegen_DESC
+  maxOnePass_ASC
+  maxOnePass_DESC
+}
+
+type StaticPreviousValues {
+  id: Int!
+  name: String!
+  targetClass: Float!
+  lifetime: Float!
+  maxMass: Float!
+  massRegen: Float!
+  maxOnePass: Float!
+}
+
+input StaticScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [StaticScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [StaticScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [StaticScalarWhereInput!]
+  id: Int
+
+  """All values that are not equal to given value."""
+  id_not: Int
+
+  """All values that are contained in given list."""
+  id_in: [Int!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [Int!]
+
+  """All values less than the given value."""
+  id_lt: Int
+
+  """All values less than or equal the given value."""
+  id_lte: Int
+
+  """All values greater than the given value."""
+  id_gt: Int
+
+  """All values greater than or equal the given value."""
+  id_gte: Int
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  targetClass: Float
+
+  """All values that are not equal to given value."""
+  targetClass_not: Float
+
+  """All values that are contained in given list."""
+  targetClass_in: [Float!]
+
+  """All values that are not contained in given list."""
+  targetClass_not_in: [Float!]
+
+  """All values less than the given value."""
+  targetClass_lt: Float
+
+  """All values less than or equal the given value."""
+  targetClass_lte: Float
+
+  """All values greater than the given value."""
+  targetClass_gt: Float
+
+  """All values greater than or equal the given value."""
+  targetClass_gte: Float
+  lifetime: Float
+
+  """All values that are not equal to given value."""
+  lifetime_not: Float
+
+  """All values that are contained in given list."""
+  lifetime_in: [Float!]
+
+  """All values that are not contained in given list."""
+  lifetime_not_in: [Float!]
+
+  """All values less than the given value."""
+  lifetime_lt: Float
+
+  """All values less than or equal the given value."""
+  lifetime_lte: Float
+
+  """All values greater than the given value."""
+  lifetime_gt: Float
+
+  """All values greater than or equal the given value."""
+  lifetime_gte: Float
+  maxMass: Float
+
+  """All values that are not equal to given value."""
+  maxMass_not: Float
+
+  """All values that are contained in given list."""
+  maxMass_in: [Float!]
+
+  """All values that are not contained in given list."""
+  maxMass_not_in: [Float!]
+
+  """All values less than the given value."""
+  maxMass_lt: Float
+
+  """All values less than or equal the given value."""
+  maxMass_lte: Float
+
+  """All values greater than the given value."""
+  maxMass_gt: Float
+
+  """All values greater than or equal the given value."""
+  maxMass_gte: Float
+  massRegen: Float
+
+  """All values that are not equal to given value."""
+  massRegen_not: Float
+
+  """All values that are contained in given list."""
+  massRegen_in: [Float!]
+
+  """All values that are not contained in given list."""
+  massRegen_not_in: [Float!]
+
+  """All values less than the given value."""
+  massRegen_lt: Float
+
+  """All values less than or equal the given value."""
+  massRegen_lte: Float
+
+  """All values greater than the given value."""
+  massRegen_gt: Float
+
+  """All values greater than or equal the given value."""
+  massRegen_gte: Float
+  maxOnePass: Float
+
+  """All values that are not equal to given value."""
+  maxOnePass_not: Float
+
+  """All values that are contained in given list."""
+  maxOnePass_in: [Float!]
+
+  """All values that are not contained in given list."""
+  maxOnePass_not_in: [Float!]
+
+  """All values less than the given value."""
+  maxOnePass_lt: Float
+
+  """All values less than or equal the given value."""
+  maxOnePass_lte: Float
+
+  """All values greater than the given value."""
+  maxOnePass_gt: Float
+
+  """All values greater than or equal the given value."""
+  maxOnePass_gte: Float
+}
+
+type StaticSubscriptionPayload {
+  mutation: MutationType!
+  node: Static
+  updatedFields: [String!]
+  previousValues: StaticPreviousValues
+}
+
+input StaticSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [StaticSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [StaticSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [StaticSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: StaticWhereInput
+}
+
+input StaticUpdateDataInput {
+  name: String
+  targetClass: Float
+  lifetime: Float
+  maxMass: Float
+  massRegen: Float
+  maxOnePass: Float
+}
+
+input StaticUpdateInput {
+  name: String
+  targetClass: Float
+  lifetime: Float
+  maxMass: Float
+  massRegen: Float
+  maxOnePass: Float
+}
+
+input StaticUpdateManyDataInput {
+  name: String
+  targetClass: Float
+  lifetime: Float
+  maxMass: Float
+  massRegen: Float
+  maxOnePass: Float
+}
+
+input StaticUpdateManyInput {
+  create: [StaticCreateInput!]
+  connect: [StaticWhereUniqueInput!]
+  set: [StaticWhereUniqueInput!]
+  disconnect: [StaticWhereUniqueInput!]
+  delete: [StaticWhereUniqueInput!]
+  update: [StaticUpdateWithWhereUniqueNestedInput!]
+  updateMany: [StaticUpdateManyWithWhereNestedInput!]
+  deleteMany: [StaticScalarWhereInput!]
+  upsert: [StaticUpsertWithWhereUniqueNestedInput!]
+}
+
+input StaticUpdateManyMutationInput {
+  name: String
+  targetClass: Float
+  lifetime: Float
+  maxMass: Float
+  massRegen: Float
+  maxOnePass: Float
+}
+
+input StaticUpdateManyWithWhereNestedInput {
+  where: StaticScalarWhereInput!
+  data: StaticUpdateManyDataInput!
+}
+
+input StaticUpdateWithWhereUniqueNestedInput {
+  where: StaticWhereUniqueInput!
+  data: StaticUpdateDataInput!
+}
+
+input StaticUpsertWithWhereUniqueNestedInput {
+  where: StaticWhereUniqueInput!
+  update: StaticUpdateDataInput!
+  create: StaticCreateInput!
+}
+
+input StaticWhereInput {
+  """Logical AND on all given filters."""
+  AND: [StaticWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [StaticWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [StaticWhereInput!]
+  id: Int
+
+  """All values that are not equal to given value."""
+  id_not: Int
+
+  """All values that are contained in given list."""
+  id_in: [Int!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [Int!]
+
+  """All values less than the given value."""
+  id_lt: Int
+
+  """All values less than or equal the given value."""
+  id_lte: Int
+
+  """All values greater than the given value."""
+  id_gt: Int
+
+  """All values greater than or equal the given value."""
+  id_gte: Int
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  targetClass: Float
+
+  """All values that are not equal to given value."""
+  targetClass_not: Float
+
+  """All values that are contained in given list."""
+  targetClass_in: [Float!]
+
+  """All values that are not contained in given list."""
+  targetClass_not_in: [Float!]
+
+  """All values less than the given value."""
+  targetClass_lt: Float
+
+  """All values less than or equal the given value."""
+  targetClass_lte: Float
+
+  """All values greater than the given value."""
+  targetClass_gt: Float
+
+  """All values greater than or equal the given value."""
+  targetClass_gte: Float
+  lifetime: Float
+
+  """All values that are not equal to given value."""
+  lifetime_not: Float
+
+  """All values that are contained in given list."""
+  lifetime_in: [Float!]
+
+  """All values that are not contained in given list."""
+  lifetime_not_in: [Float!]
+
+  """All values less than the given value."""
+  lifetime_lt: Float
+
+  """All values less than or equal the given value."""
+  lifetime_lte: Float
+
+  """All values greater than the given value."""
+  lifetime_gt: Float
+
+  """All values greater than or equal the given value."""
+  lifetime_gte: Float
+  maxMass: Float
+
+  """All values that are not equal to given value."""
+  maxMass_not: Float
+
+  """All values that are contained in given list."""
+  maxMass_in: [Float!]
+
+  """All values that are not contained in given list."""
+  maxMass_not_in: [Float!]
+
+  """All values less than the given value."""
+  maxMass_lt: Float
+
+  """All values less than or equal the given value."""
+  maxMass_lte: Float
+
+  """All values greater than the given value."""
+  maxMass_gt: Float
+
+  """All values greater than or equal the given value."""
+  maxMass_gte: Float
+  massRegen: Float
+
+  """All values that are not equal to given value."""
+  massRegen_not: Float
+
+  """All values that are contained in given list."""
+  massRegen_in: [Float!]
+
+  """All values that are not contained in given list."""
+  massRegen_not_in: [Float!]
+
+  """All values less than the given value."""
+  massRegen_lt: Float
+
+  """All values less than or equal the given value."""
+  massRegen_lte: Float
+
+  """All values greater than the given value."""
+  massRegen_gt: Float
+
+  """All values greater than or equal the given value."""
+  massRegen_gte: Float
+  maxOnePass: Float
+
+  """All values that are not equal to given value."""
+  maxOnePass_not: Float
+
+  """All values that are contained in given list."""
+  maxOnePass_in: [Float!]
+
+  """All values that are not contained in given list."""
+  maxOnePass_not_in: [Float!]
+
+  """All values less than the given value."""
+  maxOnePass_lt: Float
+
+  """All values less than or equal the given value."""
+  maxOnePass_lte: Float
+
+  """All values greater than the given value."""
+  maxOnePass_gt: Float
+
+  """All values greater than or equal the given value."""
+  maxOnePass_gte: Float
+}
+
+input StaticWhereUniqueInput {
+  id: Int
+}
+
+type Subscription {
+  system(where: SystemSubscriptionWhereInput): SystemSubscriptionPayload
+  corporation(where: CorporationSubscriptionWhereInput): CorporationSubscriptionPayload
+  static(where: StaticSubscriptionWhereInput): StaticSubscriptionPayload
+  faction(where: FactionSubscriptionWhereInput): FactionSubscriptionPayload
+  alliance(where: AllianceSubscriptionWhereInput): AllianceSubscriptionPayload
+}
+
+type System {
+  id: Int!
+  constellationId: Int
+  starId: Int
+  regionId: Int
+  systemName: String!
+  security: String
+  trueSec: Float!
+  securityStatus: Float!
+  securityClass: String
+  effect: String
+  statics(where: StaticWhereInput, orderBy: StaticOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Static!]
+}
+
+"""A connection to a list of items."""
+type SystemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SystemEdge]!
+  aggregate: AggregateSystem!
+}
+
+input SystemCreateInput {
+  constellationId: Int
+  starId: Int
+  regionId: Int
+  systemName: String!
+  security: String
+  trueSec: Float!
+  securityStatus: Float!
+  securityClass: String
+  effect: String
+  statics: StaticCreateManyInput
+}
+
+"""An edge in a connection."""
+type SystemEdge {
+  """The item at the end of the edge."""
+  node: System!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SystemOrderByInput {
+  id_ASC
+  id_DESC
+  constellationId_ASC
+  constellationId_DESC
+  starId_ASC
+  starId_DESC
+  regionId_ASC
+  regionId_DESC
+  systemName_ASC
+  systemName_DESC
+  security_ASC
+  security_DESC
+  trueSec_ASC
+  trueSec_DESC
+  securityStatus_ASC
+  securityStatus_DESC
+  securityClass_ASC
+  securityClass_DESC
+  effect_ASC
+  effect_DESC
+}
+
+type SystemPreviousValues {
+  id: Int!
+  constellationId: Int
+  starId: Int
+  regionId: Int
+  systemName: String!
+  security: String
+  trueSec: Float!
+  securityStatus: Float!
+  securityClass: String
+  effect: String
+}
+
+type SystemSubscriptionPayload {
+  mutation: MutationType!
+  node: System
+  updatedFields: [String!]
+  previousValues: SystemPreviousValues
+}
+
+input SystemSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SystemSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SystemSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SystemSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SystemWhereInput
+}
+
+input SystemUpdateInput {
+  constellationId: Int
+  starId: Int
+  regionId: Int
+  systemName: String
+  security: String
+  trueSec: Float
+  securityStatus: Float
+  securityClass: String
+  effect: String
+  statics: StaticUpdateManyInput
+}
+
+input SystemUpdateManyMutationInput {
+  constellationId: Int
+  starId: Int
+  regionId: Int
+  systemName: String
+  security: String
+  trueSec: Float
+  securityStatus: Float
+  securityClass: String
+  effect: String
+}
+
+input SystemWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SystemWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SystemWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SystemWhereInput!]
+  id: Int
+
+  """All values that are not equal to given value."""
+  id_not: Int
+
+  """All values that are contained in given list."""
+  id_in: [Int!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [Int!]
+
+  """All values less than the given value."""
+  id_lt: Int
+
+  """All values less than or equal the given value."""
+  id_lte: Int
+
+  """All values greater than the given value."""
+  id_gt: Int
+
+  """All values greater than or equal the given value."""
+  id_gte: Int
+  constellationId: Int
+
+  """All values that are not equal to given value."""
+  constellationId_not: Int
+
+  """All values that are contained in given list."""
+  constellationId_in: [Int!]
+
+  """All values that are not contained in given list."""
+  constellationId_not_in: [Int!]
+
+  """All values less than the given value."""
+  constellationId_lt: Int
+
+  """All values less than or equal the given value."""
+  constellationId_lte: Int
+
+  """All values greater than the given value."""
+  constellationId_gt: Int
+
+  """All values greater than or equal the given value."""
+  constellationId_gte: Int
+  starId: Int
+
+  """All values that are not equal to given value."""
+  starId_not: Int
+
+  """All values that are contained in given list."""
+  starId_in: [Int!]
+
+  """All values that are not contained in given list."""
+  starId_not_in: [Int!]
+
+  """All values less than the given value."""
+  starId_lt: Int
+
+  """All values less than or equal the given value."""
+  starId_lte: Int
+
+  """All values greater than the given value."""
+  starId_gt: Int
+
+  """All values greater than or equal the given value."""
+  starId_gte: Int
+  regionId: Int
+
+  """All values that are not equal to given value."""
+  regionId_not: Int
+
+  """All values that are contained in given list."""
+  regionId_in: [Int!]
+
+  """All values that are not contained in given list."""
+  regionId_not_in: [Int!]
+
+  """All values less than the given value."""
+  regionId_lt: Int
+
+  """All values less than or equal the given value."""
+  regionId_lte: Int
+
+  """All values greater than the given value."""
+  regionId_gt: Int
+
+  """All values greater than or equal the given value."""
+  regionId_gte: Int
+  systemName: String
+
+  """All values that are not equal to given value."""
+  systemName_not: String
+
+  """All values that are contained in given list."""
+  systemName_in: [String!]
+
+  """All values that are not contained in given list."""
+  systemName_not_in: [String!]
+
+  """All values less than the given value."""
+  systemName_lt: String
+
+  """All values less than or equal the given value."""
+  systemName_lte: String
+
+  """All values greater than the given value."""
+  systemName_gt: String
+
+  """All values greater than or equal the given value."""
+  systemName_gte: String
+
+  """All values containing the given string."""
+  systemName_contains: String
+
+  """All values not containing the given string."""
+  systemName_not_contains: String
+
+  """All values starting with the given string."""
+  systemName_starts_with: String
+
+  """All values not starting with the given string."""
+  systemName_not_starts_with: String
+
+  """All values ending with the given string."""
+  systemName_ends_with: String
+
+  """All values not ending with the given string."""
+  systemName_not_ends_with: String
+  security: String
+
+  """All values that are not equal to given value."""
+  security_not: String
+
+  """All values that are contained in given list."""
+  security_in: [String!]
+
+  """All values that are not contained in given list."""
+  security_not_in: [String!]
+
+  """All values less than the given value."""
+  security_lt: String
+
+  """All values less than or equal the given value."""
+  security_lte: String
+
+  """All values greater than the given value."""
+  security_gt: String
+
+  """All values greater than or equal the given value."""
+  security_gte: String
+
+  """All values containing the given string."""
+  security_contains: String
+
+  """All values not containing the given string."""
+  security_not_contains: String
+
+  """All values starting with the given string."""
+  security_starts_with: String
+
+  """All values not starting with the given string."""
+  security_not_starts_with: String
+
+  """All values ending with the given string."""
+  security_ends_with: String
+
+  """All values not ending with the given string."""
+  security_not_ends_with: String
+  trueSec: Float
+
+  """All values that are not equal to given value."""
+  trueSec_not: Float
+
+  """All values that are contained in given list."""
+  trueSec_in: [Float!]
+
+  """All values that are not contained in given list."""
+  trueSec_not_in: [Float!]
+
+  """All values less than the given value."""
+  trueSec_lt: Float
+
+  """All values less than or equal the given value."""
+  trueSec_lte: Float
+
+  """All values greater than the given value."""
+  trueSec_gt: Float
+
+  """All values greater than or equal the given value."""
+  trueSec_gte: Float
+  securityStatus: Float
+
+  """All values that are not equal to given value."""
+  securityStatus_not: Float
+
+  """All values that are contained in given list."""
+  securityStatus_in: [Float!]
+
+  """All values that are not contained in given list."""
+  securityStatus_not_in: [Float!]
+
+  """All values less than the given value."""
+  securityStatus_lt: Float
+
+  """All values less than or equal the given value."""
+  securityStatus_lte: Float
+
+  """All values greater than the given value."""
+  securityStatus_gt: Float
+
+  """All values greater than or equal the given value."""
+  securityStatus_gte: Float
+  securityClass: String
+
+  """All values that are not equal to given value."""
+  securityClass_not: String
+
+  """All values that are contained in given list."""
+  securityClass_in: [String!]
+
+  """All values that are not contained in given list."""
+  securityClass_not_in: [String!]
+
+  """All values less than the given value."""
+  securityClass_lt: String
+
+  """All values less than or equal the given value."""
+  securityClass_lte: String
+
+  """All values greater than the given value."""
+  securityClass_gt: String
+
+  """All values greater than or equal the given value."""
+  securityClass_gte: String
+
+  """All values containing the given string."""
+  securityClass_contains: String
+
+  """All values not containing the given string."""
+  securityClass_not_contains: String
+
+  """All values starting with the given string."""
+  securityClass_starts_with: String
+
+  """All values not starting with the given string."""
+  securityClass_not_starts_with: String
+
+  """All values ending with the given string."""
+  securityClass_ends_with: String
+
+  """All values not ending with the given string."""
+  securityClass_not_ends_with: String
+  effect: String
+
+  """All values that are not equal to given value."""
+  effect_not: String
+
+  """All values that are contained in given list."""
+  effect_in: [String!]
+
+  """All values that are not contained in given list."""
+  effect_not_in: [String!]
+
+  """All values less than the given value."""
+  effect_lt: String
+
+  """All values less than or equal the given value."""
+  effect_lte: String
+
+  """All values greater than the given value."""
+  effect_gt: String
+
+  """All values greater than or equal the given value."""
+  effect_gte: String
+
+  """All values containing the given string."""
+  effect_contains: String
+
+  """All values not containing the given string."""
+  effect_not_contains: String
+
+  """All values starting with the given string."""
+  effect_starts_with: String
+
+  """All values not starting with the given string."""
+  effect_not_starts_with: String
+
+  """All values ending with the given string."""
+  effect_ends_with: String
+
+  """All values not ending with the given string."""
+  effect_not_ends_with: String
+  statics_every: StaticWhereInput
+  statics_some: StaticWhereInput
+  statics_none: StaticWhereInput
+}
+
+input SystemWhereUniqueInput {
+  id: Int
+}

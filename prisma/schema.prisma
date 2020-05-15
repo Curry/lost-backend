@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model System {
+  id Int @id
+  constellationId Int
+  starId Int
+  regionId Int
+  systemName String
+  security String
+  trueSec Float
+  securityStatus Float
+  securityClass String
+  effect String
+  statics Static[]
+}
+
+model SystemStatic {
+  system System @relation(fields: [systemId], references: [id])
+  systemId Int
+  static Static @relation(fields: [staticId], references: [id])
+  staticId Int
+
+  @@id([systemId, staticId])
+}
+
+model Static {
+  id Int @id
+  name String
+  targetClass Float
+  lifetime Float
+  maxMass Float
+  massRegen Float
+  maxOnePass Float
+}

@@ -2,13 +2,11 @@ import {
   Entity,
   Column,
   PrimaryColumn,
-  OneToOne,
   JoinColumn,
   ManyToOne,
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { Star } from './star.entity';
 import { Constellation } from './constellation.entity';
 import { Static } from './static.entity';
 
@@ -56,8 +54,4 @@ export class System {
     name: 'systemStatics',
   })
   statics: Static[];
-
-  @OneToOne(() => Star, { onDelete: 'CASCADE', onUpdate: 'RESTRICT' })
-  @JoinColumn({ name: 'starId' })
-  star: Promise<Star>;
 }

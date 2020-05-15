@@ -6,10 +6,7 @@ import { Region } from './entity/region.entity';
 import { Alliance } from './entity/alliance.entity';
 import { Corporation } from './entity/corporation.entity';
 import { Faction } from './entity/faction.entity';
-import { Category } from './entity/category.entity';
-import { Star } from './entity/star.entity';
 import { Race } from './entity/race.entity';
-import { Station } from './entity/station.entity';
 import { EveService } from './eve.service';
 import { Static } from './entity/static.entity';
 
@@ -23,10 +20,7 @@ import { Static } from './entity/static.entity';
           Alliance,
           Corporation,
           Faction,
-          Category,
-          Star,
           Race,
-          Station,
         ], 'eve'),
     ],
     exports: [EveService],
